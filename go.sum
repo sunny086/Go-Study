@@ -1,0 +1,4 @@
+github.com/ledongthuc/pdf v0.0.0-20210621053716-e28cb8259002 h1:9KI9JpkbCm0b/xSjvNyg9O7G27t+cf+L3um6xv1IbNs=
+github.com/ledongthuc/pdf v0.0.0-20210621053716-e28cb8259002/go.mod h1:imJHygn/1yfhB7XSJJKlFZKl/J+dCPAknuiaGOshXAs=
+github.com/yob/pdfreader v0.0.0-20121031175755-774b0b7a501c h1:eRdyjA25zzDqzf78tojTa0YxS/ikrSI3qYkJ7cz4dQk=
+github.com/yob/pdfreader v0.0.0-20121031175755-774b0b7a501c/go.mod h1:A/ZOF1v3IafZwNa06febhcNmIoO5tDDoAno8/UfEKgk=
