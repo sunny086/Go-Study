@@ -22,3 +22,5 @@ func main() {
 func getting(context *gin.Context) {
 	fmt.Println("123")
 }
+
+//1
