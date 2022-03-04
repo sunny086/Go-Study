@@ -1,15 +1,15 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net"
 )
 
 func main() {
-	interfaces, err := net.Interfaces()
-
+	interfaces, _ := net.Interfaces()
 	fmt.Println(interfaces)
-
-	fmt.Println(err)
-
+	s, _ := json.Marshal(interfaces)
+	a := string(s)
+	fmt.Println(a)
 }
