@@ -11,6 +11,7 @@ require (
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/shirou/gopsutil/v3 v3.22.2
+	github.com/shopspring/decimal v1.3.1 // indirect
 	github.com/ugorji/go v1.2.7 // indirect
 	gitlab.com/tingshuo/go-diskstate v0.0.0-20191211131809-ee5e7223d03c // indirect
 	golang.org/x/crypto v0.0.0-20220214200702-86341886e292 // indirect
