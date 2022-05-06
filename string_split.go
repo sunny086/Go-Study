@@ -20,4 +20,6 @@ func main() {
 	fmt.Println(splitAfterN)      //[1a 2a 3a 4a5a6a7a8a9]
 	fmt.Println(len(splitAfterN)) //4
 
+	join := strings.Join(splitAfterN, ",")
+	fmt.Println(join) //1,2,3,4,5,6,7,8,9
 }

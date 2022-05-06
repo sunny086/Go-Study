@@ -69,6 +69,10 @@ func main() {
 	//tenAfter, _ := time.ParseDuration("10m");
 	//nowTimetenAfter := nowTime.Add(tenAfter)
 	//fmt.Printf("nowTimetenAfter %v\n ", nowTimetenAfter)
+
+	var str = "2022-04-23T11:20:47+08:00"
+	s3 := string(str)
+	fmt.Println(s3)
 }
 
 const timeLayout = "2006-01-02 15:04:05"
