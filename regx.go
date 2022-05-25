@@ -30,8 +30,7 @@ func main() {
 	endIp := ipInt + (1 << uint32(32-cidrInt)) - 2
 	fmt.Println(endIp)
 
-	fmt.Println(ip2Int("255.128.0.1"))
-	fmt.Println(ip2Int("255.255.255.254"))
+	fmt.Println(ip2Int("10.25.17.75"))
 
 }
 
