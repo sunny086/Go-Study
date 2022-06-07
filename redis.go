@@ -23,6 +23,7 @@ func main() {
 		var err error
 		var ip64 int64
 		var hashKeys []string
+		//当前这个hash其实只有一个键值对 username和ip64，所以取的是数组第一个元素
 		hashKeys, err = client.HKeys(key).Result()
 		username := hashKeys[0]
 		ip64, err = client.HGet(key, username).Int64()
