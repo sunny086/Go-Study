@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"time"
 )
 
 func main() {
@@ -16,13 +17,18 @@ func main() {
 		SkipInitializeWithVersion: false,                                                                      // 根据当前 MySQL 版本自动配置
 	}), &gorm.Config{})
 
-	var menus []SysMenu
-	err = db.Model(&SysMenu{}).Scopes(Scope1, Scope2).Debug().Find(&menus).Error
+	//var menus []SysMenu
+	//err = db.Model(&SysMenu{}).Scopes(Scope1, Scope2).Debug().Find(&menus).Error
+	//
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//fmt.Println(menus)
 
+	err = db.Model(&SysUser{}).Debug().Where("user_id = 2").Update("lock_time", time.Now().Format("2006-01-02 15:04:05")).Error
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(menus)
 }
 
 func Scope1(db *gorm.DB) *gorm.DB {
@@ -60,4 +66,31 @@ type SysMenu struct {
 
 func (SysMenu) TableName() string {
 	return "sys_menu"
+}
+
+type SysUser struct {
+	UserId   int    `gorm:"primaryKey;autoIncrement;comment:编码"  json:"userId"`
+	Username string `json:"username" gorm:"size:64;comment:用户名"`
+	Password string `json:"-" gorm:"size:128;comment:密码"`
+	NickName string `json:"nickName,omitempty" gorm:"size:128;comment:昵称"`
+	Phone    string `json:"phone" gorm:"size:11;comment:手机号"`
+	RoleId   int    `json:"roleId" gorm:"size:20;comment:角色ID"`
+	Salt     string `json:"-" gorm:"size:255;comment:加盐"`
+	Avatar   string `json:"avatar,omitempty" gorm:"size:255;comment:头像"`
+	Sex      string `json:"sex,omitempty" gorm:"size:255;comment:性别"`
+	Email    string `json:"email,omitempty" gorm:"size:128;comment:邮箱"`
+	DeptId   int    `json:"deptId,omitempty" gorm:"size:20;comment:部门"`
+	PostId   int    `json:"postId,omitempty" gorm:"size:20;comment:岗位"`
+	Remark   string `json:"remark" gorm:"size:255;comment:备注"`
+	Status   string `json:"status" gorm:"size:4;comment:状态"`
+	DeptIds  []int  `json:"deptIds,omitempty" gorm:"-"`
+	PostIds  []int  `json:"postIds,omitempty" gorm:"-"`
+	RoleIds  []int  `json:"roleIds,omitempty" gorm:"-"`
+	Ip       string `json:"ip" gorm:"type:varchar(30);comment:可信主机ip"`
+	StartIp  int64  `json:"startIp" gorm:"type:int(64);comment:起始Ip"`
+	EndIp    int64  `json:"endIp" gorm:"type:int(64);comment:起始Ip"`
+}
+
+func (SysUser) TableName() string {
+	return "sys_user"
 }
