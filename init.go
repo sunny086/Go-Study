@@ -12,3 +12,7 @@ func main() {
 func init() {
 	log.Println("init")
 }
+
+func init() {
+	fmt.Println("init....")
+}
