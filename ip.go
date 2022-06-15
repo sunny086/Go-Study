@@ -8,7 +8,7 @@ import (
 
 func main() {
 	ipVerifyList := "192.168.1.0-192.168.1.10"
-	ip := "192.168.1.10"
+	ip := "10.25.17.76"
 	ipSlice := strings.Split(ipVerifyList, `-`)
 	if len(ipSlice) < 0 {
 		return
