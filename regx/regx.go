@@ -31,7 +31,16 @@ func main() {
 	fmt.Println(endIp)
 
 	fmt.Println(ip2Int("10.25.17.75"))
+	singleIP()
+}
 
+func singleIP() {
+	var CIDR = "^(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|[1-9])\\.(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\.(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\.(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)$"
+
+	regexp2 := regexp2.MustCompile(CIDR, 0)
+	matchString, err := regexp2.MatchString("0.0.0.0")
+	fmt.Println(matchString)
+	fmt.Println(err)
 }
 
 func ip2Int(ip string) int64 {
