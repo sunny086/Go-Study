@@ -3,6 +3,7 @@ module GoTest
 go 1.16
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/dlclark/regexp2 v1.4.0
 	github.com/gin-gonic/gin v1.7.3
 	github.com/go-playground/validator/v10 v10.10.0 // indirect
