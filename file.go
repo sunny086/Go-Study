@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
@@ -92,6 +93,22 @@ func init() {
 func main() {
 	//readJpgFile()
 	//createOpenWriteFile()
+	//fileSeek()
+}
+
+func fileSeek() {
+	//修改文件的读写指针位置 Seek()，包含两个参数：
+	//参数1：偏移量，为正数时向文件尾偏移，为负数时向文件头偏移
+	//参数2：偏移的开始位置，包括：
+	//io.SeekStart：从文件起始位置开始
+	//io.SeekCurrent：从文件当前位置开始
+	//io.SeekEnd：从文件末尾位置开始
+	f, _ := os.OpenFile("D:\\test.txt", os.O_RDWR, 6)
+	off, _ := f.Seek(5, io.SeekStart)
+	fmt.Println(off) // 5
+	n, _ := f.WriteAt([]byte("111"), off)
+	fmt.Println(n)
+	f.Close()
 }
 
 //createOpenWriteFile 创建、打开、写入文件
