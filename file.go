@@ -90,6 +90,46 @@ func init() {
 }
 
 func main() {
+	//readJpgFile()
+	//createOpenWriteFile()
+}
+
+//createOpenWriteFile 创建、打开、写入文件
+func createOpenWriteFile() {
+	f, err := os.Create("D:\\test.txt")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(f) // 打印文件指针
+	f.Close()
+
+	f, err = os.OpenFile("D:\\test.txt", os.O_APPEND|os.O_RDWR, os.ModeAppend)
+	if err != nil {
+		fmt.Println("open file err: ", err)
+		return
+	}
+	defer f.Close()
+
+	// 写入文件内容 写入字节 Write()：
+	n, err := f.Write([]byte("123hello"))
+	if err != nil {
+		fmt.Println("write err: ", err)
+		return
+	}
+	fmt.Println("write number = ", n)
+
+	// 写入文件内容 按字符串写 WriteString()：
+	n, err = f.WriteString("xujinshan") // 会将前5个字符替换为 hello
+	if err != nil {
+		fmt.Println("write err: ", err)
+		return
+	}
+	fmt.Println("write number = ", n)
+}
+
+//readJpgFile 读取jpg文件
+func readJpgFile() {
 	file, err := os.Open("D:\\1.jpg")
 	if err != nil {
 		log.Fatal(err.Error())
