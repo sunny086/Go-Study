@@ -94,6 +94,22 @@ func main() {
 	//readJpgFile()
 	//createOpenWriteFile()
 	//fileSeek()
+	//osStat()
+}
+
+func osStat() {
+	fileInfo, err := os.Stat("D:\\test.txt")
+	if err != nil {
+		fmt.Println("stat err: ", err)
+		return
+	}
+	fmt.Printf("%T\n", fileInfo) // *os.fileStat
+	fmt.Println(fileInfo.Size())
+	fmt.Println(fileInfo.Mode())
+	fmt.Println(fileInfo.ModTime())
+	fmt.Println(fileInfo.IsDir())
+	fmt.Println(fileInfo.Sys())
+	fmt.Println(fileInfo.Name())
 }
 
 func fileSeek() {
