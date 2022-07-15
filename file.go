@@ -95,6 +95,28 @@ func main() {
 	//createOpenWriteFile()
 	//fileSeek()
 	//osStat()
+	//pathMkdir()
+
+}
+
+func pathMkdir() {
+	// 路径操作
+	fmt.Println(filepath.IsAbs("./test.txt")) // false：判断是否是绝对路径
+	fmt.Println(filepath.Abs("./test.txt"))   // 转换为绝对路径
+
+	// 创建目录
+	err := os.Mkdir("./test", os.ModePerm)
+	if err != nil {
+		fmt.Println("mkdir err: ", err)
+		return
+	}
+
+	// 创建多级目录
+	err = os.MkdirAll("./dd/rr", os.ModePerm)
+	if err != nil {
+		fmt.Println("mkdirAll err: ", err)
+		return
+	}
 }
 
 func osStat() {
