@@ -96,7 +96,16 @@ func main() {
 	//fileSeek()
 	//osStat()
 	//pathMkdir()
+	//fileRemove()
 
+}
+
+func fileRemove() {
+	err := os.RemoveAll("./dd")
+	if err != nil {
+		fmt.Println("remove err:", err)
+		return
+	}
 }
 
 func pathMkdir() {
