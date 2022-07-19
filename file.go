@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -98,6 +99,18 @@ func main() {
 	//pathMkdir()
 	//fileRemove()
 	//readFile()
+	//removeExcludePath()
+}
+
+func removeExcludePath() {
+	//dir, err := ioutil.ReadDir(models.TempDir)
+	//for _, d := range dir {
+	//	os.RemoveAll(path.Join([]string{models.TempDir, d.Name()}...))
+	//}
+	dir, _ := ioutil.ReadDir("./dd")
+	for _, d := range dir {
+		os.RemoveAll(path.Join([]string{"./dd", d.Name()}...))
+	}
 }
 
 func readFile() {
