@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"strconv"
 	"time"
 )
 
@@ -18,6 +19,10 @@ func main() {
 }
 
 func ContextWithCancel() {
+	var filenameChan = make(chan string, 100)
+	for i := 0; i < 100; i++ {
+		filenameChan <- "file" + strconv.Itoa(i)
+	}
 	ctx, cancel := context.WithCancel(context.Background())
 	go func() {
 		for {
@@ -26,8 +31,12 @@ func ContextWithCancel() {
 				fmt.Println(ctx.Value("msg"))
 				fmt.Println("kill1")
 				return
+			case filename := <-filenameChan:
+				dealFile(ctx)
+				time.Sleep(time.Second)
+				fmt.Println(filename)
 			default:
-
+				fmt.Println("hello")
 			}
 		}
 	}()
@@ -38,6 +47,10 @@ func ContextWithCancel() {
 		fmt.Println("结束")
 	})
 	Exit()
+}
+
+func dealFile(ctx context.Context) {
+
 }
 
 func Exit() {
