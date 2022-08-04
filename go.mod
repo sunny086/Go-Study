@@ -18,6 +18,7 @@ require (
 	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/onsi/gomega v1.18.1 // indirect
 	github.com/panjf2000/ants v1.2.1
+	github.com/saracen/go7z-fixtures v0.0.0-20190623165746-aa6b8fba1d2f // indirect
 	github.com/shirou/gopsutil/v3 v3.22.2
 	github.com/shopspring/decimal v1.3.1
 	github.com/ugorji/go v1.2.7 // indirect
@@ -25,6 +26,7 @@ require (
 	golang.org/x/crypto v0.0.0-20220214200702-86341886e292 // indirect
 	golang.org/x/sys v0.0.0-20220227234510-4e6760a101f9 // indirect
 	golang.org/x/text v0.3.7 // indirect
+	golift.io/xtractr v0.1.2
 	google.golang.org/protobuf v1.27.1 // indirect
 	gorm.io/driver/mysql v1.3.4
 	gorm.io/gorm v1.23.5
