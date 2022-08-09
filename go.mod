@@ -19,6 +19,7 @@ require (
 	github.com/onsi/gomega v1.18.1 // indirect
 	github.com/panjf2000/ants v1.2.1
 	github.com/saracen/go7z-fixtures v0.0.0-20190623165746-aa6b8fba1d2f // indirect
+	github.com/satori/go.uuid v1.2.0
 	github.com/shirou/gopsutil/v3 v3.22.2
 	github.com/shopspring/decimal v1.3.1
 	github.com/ugorji/go v1.2.7 // indirect
