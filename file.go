@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"os/exec"
 	"path"
 	"path/filepath"
 	"strconv"
@@ -100,6 +101,13 @@ func main() {
 	//fileRemove()
 	//readFile()
 	//removeExcludePath()
+	//CopySoftLinkCommand()
+
+}
+
+func CopySoftLinkCommand() {
+	err2 := exec.Command("bash", "-c", "cp -d /opt/usb/soft_link_bak11 /opt/usb/soft_link_bak111").Run()
+	fmt.Println(err2)
 }
 
 func removeExcludePath() {
