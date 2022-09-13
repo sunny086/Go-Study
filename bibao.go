@@ -18,7 +18,8 @@ func main() {
 	//bibao_test1()
 
 	//bibao_test2()
-	bibao_test3()
+	//bibao_test3()
+	bibao_test4()
 }
 
 //闭包测试1 闭包( Closure)在某些编程语言中也被称为 Lambda表达式（如Java） 函数+引用环境=闭包
@@ -51,6 +52,19 @@ func bibao_test3() {
 			fmt.Println(i)
 			wg.Done()
 		}(i)
+	}
+	wg.Wait()
+}
+
+func bibao_test4() {
+	var wg sync.WaitGroup
+	for i := 0; i < 5; i++ {
+		wg.Add(1)
+		i := i
+		go func() {
+			fmt.Println(i)
+			wg.Done()
+		}()
 	}
 	wg.Wait()
 }
