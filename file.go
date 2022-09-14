@@ -138,7 +138,8 @@ func removeExcludePath() {
 	}
 }
 
-func readFile() {
+//按照指定字节长度读取文件
+func readFile1() {
 	f, err := os.OpenFile("D:\\test.txt", os.O_APPEND|os.O_RDWR, os.ModeAppend)
 	if err != nil {
 		fmt.Println("open file err: ", err)
@@ -159,6 +160,13 @@ func readFile() {
 			break
 		}
 	}
+}
+
+//直接readFile
+func readFile2() {
+	previousVersionByte, err := os.ReadFile("/opt/usb/soft_link/config/version.txt")
+	fmt.Println(err)
+	fmt.Println(string(previousVersionByte))
 }
 
 func fileRemove() {
