@@ -110,6 +110,17 @@ func TestReflect_TypeOf01(t *testing.T) {
 	fmt.Printf("*person's type is %s ,kind is %s \n", reflect.TypeOf(&person), reflect.TypeOf(&person).Kind())
 }
 
+// typeof.name获取结构体名字
+func TestReflect_TypeOf02(t *testing.T) {
+	type Person struct {
+		Name string
+		Age  int
+	}
+	person := Person{"lisi", 13}
+	personTypeOf := reflect.TypeOf(person)
+	fmt.Println(personTypeOf.Name()) // Person
+}
+
 //对于指针类型的变量，可以使用Type.Elem获取到指针指向变量的真实类型对象
 func TestReflect_TypeOf_Elem(t *testing.T) {
 	//TypeOf()：获取变量的类型，即pair中的 concrete type
