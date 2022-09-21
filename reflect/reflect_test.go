@@ -139,6 +139,10 @@ func TestReflect_TypeOf03(t *testing.T) {
 	fmt.Println(personTypeOf.Field(0).Type)        // string
 	fmt.Println(personTypeOf.Field(0).Type.Kind()) // string
 	fmt.Println(personTypeOf.Field(0).Tag)         // json:"name"
+
+	//获取名称为Age的成员字段类型对象 FieldByName返回值和Field返回值一样
+	ageField, _ := personTypeOf.FieldByName("Age")
+	fmt.Println(ageField.Type) // int
 }
 
 //对于指针类型的变量，可以使用Type.Elem获取到指针指向变量的真实类型对象
