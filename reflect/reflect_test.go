@@ -132,17 +132,17 @@ func TestReflect_TypeOf03(t *testing.T) {
 
 	for i := 0; i < personTypeOf.NumField(); i++ {
 		field := personTypeOf.Field(i)
-		fmt.Println(field.Name, field.Type)
+		fmt.Println("field.Name:", field.Name, " field.Type:", field.Type)
 	}
-	fmt.Println(personTypeOf.NumField())           // 2
-	fmt.Println(personTypeOf.Field(0).Name)        // {Name string  0 [0] false}
-	fmt.Println(personTypeOf.Field(0).Type)        // string
-	fmt.Println(personTypeOf.Field(0).Type.Kind()) // string
-	fmt.Println(personTypeOf.Field(0).Tag)         // json:"name"
+	fmt.Println("结构体字段数量：", personTypeOf.NumField())                   // 2
+	fmt.Println("Field.Name:", personTypeOf.Field(0).Name)             // {Name string  0 [0] false}
+	fmt.Println("Field.Type:", personTypeOf.Field(0).Type)             // string
+	fmt.Println("Field.Type.Kind:", personTypeOf.Field(0).Type.Kind()) // string
+	fmt.Println("Field.Tag", personTypeOf.Field(0).Tag)                // json:"name"
 
 	//获取名称为Age的成员字段类型对象 FieldByName返回值和Field返回值一样
 	ageField, _ := personTypeOf.FieldByName("Age")
-	fmt.Println(ageField.Type) // int
+	fmt.Println("FieldByName:", ageField.Type) // int
 }
 
 //对于指针类型的变量，可以使用Type.Elem获取到指针指向变量的真实类型对象
