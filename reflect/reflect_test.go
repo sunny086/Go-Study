@@ -121,6 +121,26 @@ func TestReflect_TypeOf02(t *testing.T) {
 	fmt.Println(personTypeOf.Name()) // Person
 }
 
+func TestReflect_TypeOf03(t *testing.T) {
+	type Person struct {
+		Name  string `json:"name"`
+		Age   int
+		Money int
+	}
+	person := Person{"lisi", 13, 999999}
+	personTypeOf := reflect.TypeOf(person)
+
+	for i := 0; i < personTypeOf.NumField(); i++ {
+		field := personTypeOf.Field(i)
+		fmt.Println(field.Name, field.Type)
+	}
+	fmt.Println(personTypeOf.NumField())           // 2
+	fmt.Println(personTypeOf.Field(0).Name)        // {Name string  0 [0] false}
+	fmt.Println(personTypeOf.Field(0).Type)        // string
+	fmt.Println(personTypeOf.Field(0).Type.Kind()) // string
+	fmt.Println(personTypeOf.Field(0).Tag)         // json:"name"
+}
+
 //对于指针类型的变量，可以使用Type.Elem获取到指针指向变量的真实类型对象
 func TestReflect_TypeOf_Elem(t *testing.T) {
 	//TypeOf()：获取变量的类型，即pair中的 concrete type
