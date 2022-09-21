@@ -1,8 +1,9 @@
-package main
+package refelct
 
 import (
 	"fmt"
 	"reflect"
+	"testing"
 )
 
 type SysDictDataGetPageReq struct {
@@ -23,14 +24,6 @@ func reflectTest04() {
 	fmt.Println(name)
 	fmt.Println(qType.NumField())
 	fmt.Println(qType.NumMethod())
-
-}
-
-func main() {
-	//reflectTest01()
-	//reflectTest02()
-	reflectTest03()
-	//reflectTest04()
 
 }
 
@@ -81,7 +74,7 @@ func reflectTest02() {
 
 }
 
-func reflectTest01() {
+func TestReflect01(t *testing.T) {
 	//ValueOf()：获取变量的值，即pair中的 value
 	//TypeOf()：获取变量的类型，即pair中的 concrete type
 	type Person struct {
@@ -101,4 +94,33 @@ func reflectTest01() {
 	fmt.Println(reflect.TypeOf(p).Name() == "Person")       // true
 	fmt.Println(reflect.TypeOf(p).Kind() == reflect.Struct) //true
 
+}
+
+// 通过反射获取结构体的type类型（package.structName）和kind种类(struct、ptr....)
+func TestReflect_TypeOf01(t *testing.T) {
+	//TypeOf()：获取变量的类型，即pair中的 concrete type
+	type Person struct {
+		Name string
+		Age  int
+	}
+	person := Person{"lisi", 13}
+	//  person's type is refelct.Person ,kind is struct
+	fmt.Printf("person's type is %s ,kind is %s \n", reflect.TypeOf(person), reflect.TypeOf(person).Kind())
+	//  *person's type is *refelct.Person ,kind is ptr
+	fmt.Printf("*person's type is %s ,kind is %s \n", reflect.TypeOf(&person), reflect.TypeOf(&person).Kind())
+}
+
+//对于指针类型的变量，可以使用Type.Elem获取到指针指向变量的真实类型对象
+func TestReflect_TypeOf_Elem(t *testing.T) {
+	//TypeOf()：获取变量的类型，即pair中的 concrete type
+	type Person struct {
+		Name string
+		Age  int
+	}
+	person := Person{"lisi", 13}
+	personTypeOf := reflect.TypeOf(&person)
+	fmt.Printf("*person's type is %s ,kind is %s \n", personTypeOf, personTypeOf.Kind())
+	elem := reflect.TypeOf(&person).Elem()
+	//*person's type is refelct.Person ,kind is struct
+	fmt.Printf("*person's type is %s ,kind is %s \n", elem, elem.Kind())
 }
