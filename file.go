@@ -14,6 +14,8 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"syscall"
+	"time"
 )
 
 func GetAllFiles(dirPth string) (files []string, err error) {
@@ -56,7 +58,7 @@ func CheckFile(src string, suffix string) error {
 	return nil
 }
 
-//根据文件头获取文件类型
+// 根据文件头获取文件类型
 func GetFileType(file []byte) string {
 	if len(file) < 4 {
 		return ""
@@ -102,7 +104,74 @@ func main() {
 	//readFile()
 	//removeExcludePath()
 	//CopySoftLinkCommand()
+	//GetAllFileTime()
 
+}
+
+// GetAllFileTime 获取指定目录下的所有文件的修改时间 访问时间 创建时间
+func GetAllFileTime() {
+	//递归获取目录下的所有文件
+	var files []string
+	files, _ = GetAllFile("D:\\GoLand2021.3.1\\project\\Go")
+
+	fmt.Println("目录下的所有文件如下")
+	for i := 0; i < len(files); i++ {
+		fmt.Println("文件名：", files[i])
+
+		// 获取文件原来的访问时间，修改时间
+		finfo, _ := os.Stat(files[i])
+
+		// linux环境下代码如下
+		//linuxFileAttr := finfo.Sys().(*syscall.Stat_t)
+		//fmt.Println("文件创建时间", SecondToTime(linuxFileAttr.Ctim.Sec))
+		//fmt.Println("最后访问时间", SecondToTime(linuxFileAttr.Atim.Sec))
+		//fmt.Println("最后修改时间", SecondToTime(linuxFileAttr.Mtim.Sec))
+
+		// windows下代码如下
+		winFileAttr := finfo.Sys().(*syscall.Win32FileAttributeData)
+		fmt.Println("文件创建时间：", SecondToTime(winFileAttr.CreationTime.Nanoseconds()/1e9))
+		fmt.Println("最后访问时间：", SecondToTime(winFileAttr.LastAccessTime.Nanoseconds()/1e9))
+		fmt.Println("最后修改时间：", SecondToTime(winFileAttr.LastWriteTime.Nanoseconds()/1e9))
+	}
+	now := time.Now()
+	d, _ := time.ParseDuration("-24h")
+	fmt.Printf("当前时间：%v\n", now)
+	fmt.Printf("当前时间戳：%v\n", now.Unix())
+	fmt.Println(now.Add(d).Format("2006-01-02 15:04:05"))
+}
+
+// 递归获取指定目录下的所有文件名
+func GetAllFile(pathname string) ([]string, error) {
+	var result []string
+
+	fis, err := ioutil.ReadDir(pathname)
+	if err != nil {
+		fmt.Printf("读取文件目录失败，pathname=%v, err=%v \n", pathname, err)
+		return result, err
+	}
+
+	// 所有文件/文件夹
+	for _, fi := range fis {
+		fullname := pathname + "/" + fi.Name()
+		// 是文件夹则递归进入获取;是文件，则压入数组
+		if fi.IsDir() {
+			temp, err := GetAllFile(fullname)
+			if err != nil {
+				fmt.Printf("读取文件目录失败,fullname=%v, err=%v", fullname, err)
+				return result, err
+			}
+			result = append(result, temp...)
+		} else {
+			result = append(result, fullname)
+		}
+	}
+
+	return result, nil
+}
+
+// 把秒级的时间戳转为time格式
+func SecondToTime(sec int64) time.Time {
+	return time.Unix(sec, 0)
 }
 
 func CopySoftLinkCommand() {
@@ -138,7 +207,7 @@ func removeExcludePath() {
 	}
 }
 
-//按照指定字节长度读取文件
+// 按照指定字节长度读取文件
 func readFile1() {
 	f, err := os.OpenFile("D:\\test.txt", os.O_APPEND|os.O_RDWR, os.ModeAppend)
 	if err != nil {
@@ -162,7 +231,7 @@ func readFile1() {
 	}
 }
 
-//直接readFile
+// 直接readFile
 func readFile2() {
 	previousVersionByte, err := os.ReadFile("/opt/usb/soft_link/config/version.txt")
 	fmt.Println(err)
@@ -227,7 +296,7 @@ func fileSeek() {
 	f.Close()
 }
 
-//createOpenWriteFile 创建、打开、写入文件
+// createOpenWriteFile 创建、打开、写入文件
 func createOpenWriteFile() {
 	f, err := os.Create("D:\\test.txt")
 	if err != nil {
@@ -261,7 +330,7 @@ func createOpenWriteFile() {
 	fmt.Println("write number = ", n)
 }
 
-//readJpgFile 读取jpg文件
+// readJpgFile 读取jpg文件
 func readJpgFile() {
 	file, err := os.Open("D:\\1.jpg")
 	if err != nil {
@@ -285,7 +354,7 @@ func judgeType(file *os.File) bool {
 	return false
 }
 
-//获取16进制
+// 获取16进制
 func bytesToHexString(src []byte) string {
 	res := bytes.Buffer{}
 	if src == nil || len(src) <= 0 {
