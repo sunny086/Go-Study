@@ -14,8 +14,8 @@ func sliceChangeAfterAppend() {
 	s1 := []int{1, 2, 3, 4}
 	s2 := []int{-1, -2, -3}
 	s3 := append(s1[:1], s2...)
-	fmt.Println(s3)
-	fmt.Println(s1)
+	fmt.Println(s3) //[1 -1 -2 -3]
+	fmt.Println(s1) //[1 -1 -2 -3]
 }
 
 // sliceStartEnd 含头不含尾
