@@ -7,16 +7,25 @@ func main() {
 	//sliceAppend()
 	//sliceCopy()
 	//sliceStartEnd()
+	//sliceChangeAfterAppend()
 }
 
-//sliceStartEnd 含头不含尾
+func sliceChangeAfterAppend() {
+	s1 := []int{1, 2, 3, 4}
+	s2 := []int{-1, -2, -3}
+	s3 := append(s1[:1], s2...)
+	fmt.Println(s3)
+	fmt.Println(s1)
+}
+
+// sliceStartEnd 含头不含尾
 func sliceStartEnd() {
 	s1 := []int{1, 3, 6, 9, 11, 33, 44, 55, 66, 77, 88, 99}
 	slice := s1[3:6]
 	fmt.Println(slice) //[9 11 33]
 }
 
-//sliceCopy 切片拷贝
+// sliceCopy 切片拷贝
 func sliceCopy() {
 	s1 := []int{1, 3, 6, 9}
 	s2 := make([]int, 10) //必须给与充足的空间
@@ -27,7 +36,7 @@ func sliceCopy() {
 	fmt.Println(num) //4
 }
 
-//sliceAppend 切片拼接
+// sliceAppend 切片拼接
 func sliceAppend() {
 	slice1 := make([]int, 5, 10)
 	fmt.Println(len(slice1)) // 5
