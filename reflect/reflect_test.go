@@ -44,3 +44,13 @@ func TestReflect_SetStructValueByFieldArray(t *testing.T) {
 		fmt.Println(string(marshal))
 	}
 }
+
+func TestReflect_GetStructAllField(t *testing.T) {
+	var req SecurityDeepPacketInspectionSearch
+	//获取结构体的所有字段
+	typeOf := reflect.TypeOf(req)
+	for i := 0; i < typeOf.NumField(); i++ {
+		field := typeOf.Field(i)
+		fmt.Println("field name:" + field.Name)
+	}
+}
