@@ -1,34 +1,35 @@
 package refelct
 
 import (
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"testing"
 )
 
-type user struct {
+type User struct {
 	Name  string
 	Age   int
 	Score int
 }
 
-func (u *user) ShowName() {
+func (u *User) ShowName() {
 	fmt.Println(u.Name)
 }
 
-func (u *user) AddAge(age int) {
+func (u *User) AddAge(age int) {
 	fmt.Println("age add result:", u.Age+age)
 }
 
-func (u *user) AddAgeAndScore(age, score int) {
+func (u *User) AddAgeAndScore(age, score int) {
 	u.Age = u.Age + age
 	u.Score = u.Score + score
 	fmt.Println("score add result:", u.Score+score)
 	fmt.Println("age add result:", u.Age+age)
 }
 
-func TestReflect_Method(t *testing.T) {
-	u := &user{"lisi", 20, 90}
+func TestReflect_Execute_Method(t *testing.T) {
+	u := &User{"lisi", 20, 90}
 	v := reflect.ValueOf(u)
 	// 调用无参方法
 	methodV := v.MethodByName("ShowName")
@@ -42,4 +43,19 @@ func TestReflect_Method(t *testing.T) {
 	args2 := []reflect.Value{reflect.ValueOf(30), reflect.ValueOf(10)}
 	methodV3.Call(args2)
 	fmt.Println(v)
+}
+
+func TestReflect_GetAllMethod(t *testing.T) {
+	v := reflect.TypeOf(&User{})
+	// 获取所有方法
+	for i := 0; i < v.NumMethod(); i++ {
+		method := v.Method(i)
+		marshal, err := json.Marshal(method)
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Println(string(marshal))
+		}
+		fmt.Println("method name:", method.Name)
+	}
 }
