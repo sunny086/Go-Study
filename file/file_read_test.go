@@ -1,10 +1,14 @@
 package file
 
 import (
+	"bufio"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
+	"strconv"
 	"testing"
+	"time"
 )
 
 // TestReadFileBySpecifiedByte 按字节读取文件
@@ -40,4 +44,24 @@ func TestReadFileAtOneTime(t *testing.T) {
 		return
 	}
 	fmt.Println(string(bytes))
+}
+
+func TestWriteFileByBuff(t *testing.T) {
+	err := ioutil.WriteFile("D:\\test.txt", []byte(""), 0666)
+	dstFile, err := os.OpenFile("D:\\test.txt", os.O_CREATE|os.O_WRONLY, os.ModePerm)
+	if err != nil {
+		fmt.Println("open file err:", err)
+		return
+	}
+	bufWriter := bufio.NewWriter(dstFile)
+	st := time.Now()
+	defer func() {
+		//flush操作
+		bufWriter.Flush()
+		dstFile.Close()
+		fmt.Println("文件写入耗时：", time.Now().Sub(st).Seconds(), "s")
+	}()
+	for i := 0; i < 100; i++ {
+		bufWriter.WriteString(strconv.Itoa(i) + "\n")
+	}
 }
