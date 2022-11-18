@@ -7,8 +7,8 @@ import (
 	"testing"
 )
 
-// TestReadFile 按字节读取文件
-func TestReadFile(t *testing.T) {
+// TestReadFileBySpecifiedByte 按字节读取文件
+func TestReadFileBySpecifiedByte(t *testing.T) {
 	f, err := os.OpenFile("D:\\test.txt", os.O_APPEND|os.O_RDWR, os.ModeAppend)
 	if err != nil {
 		fmt.Println("open file err: ", err)
@@ -30,4 +30,14 @@ func TestReadFile(t *testing.T) {
 			break
 		}
 	}
+}
+
+// TestReadFileAtOneTime 一次性读取文件
+func TestReadFileAtOneTime(t *testing.T) {
+	bytes, err := os.ReadFile("D:\\test.txt")
+	if err != nil {
+		fmt.Println("read file err: ", err)
+		return
+	}
+	fmt.Println(string(bytes))
 }
