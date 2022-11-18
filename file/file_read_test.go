@@ -2,11 +2,15 @@ package file
 
 import (
 	"bufio"
+	"bytes"
+	"encoding/hex"
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"os"
 	"strconv"
+	"strings"
 	"syscall"
 	"testing"
 	"time"
@@ -147,4 +151,56 @@ func TestSeek(t *testing.T) {
 	n, _ := f.WriteAt([]byte("00"), off)
 	fmt.Println(n)
 	f.Close()
+}
+
+// TestReadJpgFile 读取jpg文件
+func TestReadJpgFile(t *testing.T) {
+	file, err := os.Open("D:\\1.jpg")
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	defer file.Close()
+	result := judgeType(file)
+	fmt.Println("判断结果: ", result)
+}
+
+func judgeType(file *os.File) bool {
+	buf := make([]byte, 20)
+	//读取文件的前20个字节
+	n, _ := file.Read(buf)
+	//把byte转换为十六进制
+	fileCode := bytesToHexString(buf[:n])
+	picMap := make(map[string]string)
+	picMap["ffd8ffe0"] = "jpg"
+	picMap["ffd8ffe1"] = "jpg"
+	picMap["ffd8ffe8"] = "jpg"
+	picMap["89504e47"] = "png"
+	for k, _ := range picMap {
+		if strings.HasPrefix(fileCode, k) {
+			return true
+		}
+	}
+	return false
+}
+
+// byte转换16进制
+func bytesToHexString(src []byte) string {
+	res := bytes.Buffer{}
+	if src == nil || len(src) <= 0 {
+		return ""
+	}
+	temp := make([]byte, 0)
+	i, length := 100, len(src)
+	if length < i {
+		i = length
+	}
+	for j := 0; j < i; j++ {
+		sub := src[j] & 0xFF
+		hv := hex.EncodeToString(append(temp, sub))
+		if len(hv) < 2 {
+			res.WriteString(strconv.FormatInt(int64(0), 10))
+		}
+		res.WriteString(hv)
+	}
+	return res.String()
 }
