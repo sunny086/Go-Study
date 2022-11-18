@@ -204,3 +204,23 @@ func bytesToHexString(src []byte) string {
 	}
 	return res.String()
 }
+
+func TestCheckFileExist(t *testing.T) {
+	src := "D:\\test.txt"
+	suffix := "txt"
+	//判断指定目录下的文件是否包含指定的后缀名文件
+	fileInfo, err := os.Stat(src)
+	if err != nil {
+		fmt.Println("文件不存在")
+		return
+	}
+	if fileInfo.IsDir() {
+		//判断是否是目录
+		fmt.Println("指定的文件不是文件")
+	}
+	if !strings.HasSuffix(src, suffix) {
+		fmt.Println("文件后缀名不是指定的后缀名")
+	} else {
+		fmt.Println("文件后缀名是指定的后缀名")
+	}
+}
