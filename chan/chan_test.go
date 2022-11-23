@@ -58,7 +58,7 @@ func read(ch chan int) {
 	wg.Done()
 }
 
-func TestChanSyncReadWrite(t *testing.T) {
+func TestChanSyncReadWrite1(t *testing.T) {
 	var ch = make(chan int, 10)
 	wg.Add(1)
 	go write(ch)
@@ -67,4 +67,28 @@ func TestChanSyncReadWrite(t *testing.T) {
 
 	wg.Wait()
 	fmt.Println("退出...")
+}
+
+func TestChanSyncReadWrite2(t *testing.T) {
+	// 1、创建channel
+	var ch1 = make(chan int, 3)
+	wg.Add(1)
+	go func() {
+		for i := 1; i <= 30; i++ {
+			num := <-ch1
+			fmt.Println(num)
+		}
+		wg.Done()
+	}()
+	wg.Add(1)
+	go func() {
+		for i := 1; i <= 3; i++ {
+			time.Sleep(time.Second)
+			ch1 <- i
+		}
+		close(ch1)
+		wg.Done()
+	}()
+
+	wg.Wait()
 }
