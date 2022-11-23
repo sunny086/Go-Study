@@ -2,7 +2,9 @@ package _chan
 
 import (
 	"fmt"
+	"sync"
 	"testing"
+	"time"
 )
 
 func TestChanForRange(t *testing.T) {
@@ -31,4 +33,38 @@ func TestChanFor(t *testing.T) {
 	for j := 0; j < 10; j++ {
 		fmt.Println(<-ch2)
 	}
+}
+
+var wg sync.WaitGroup
+
+// 写数据
+func write(ch chan int) {
+	for i := 1; i <= 10; i++ {
+		ch <- i
+		fmt.Printf("【写入】数据%v成功\n", i)
+		//写慢 读快 写阻塞读 不影响
+		time.Sleep(time.Millisecond * 100)
+	}
+	//for range遍历 所以需要关闭管道
+	close(ch)
+	wg.Done()
+}
+
+func read(ch chan int) {
+	for v := range ch {
+		fmt.Printf("【读取】数据%v成功\n", v)
+		time.Sleep(time.Millisecond * 10)
+	}
+	wg.Done()
+}
+
+func TestChanSyncReadWrite(t *testing.T) {
+	var ch = make(chan int, 10)
+	wg.Add(1)
+	go write(ch)
+	wg.Add(1)
+	go read(ch)
+
+	wg.Wait()
+	fmt.Println("退出...")
 }
