@@ -69,6 +69,7 @@ func TestChanSyncReadWrite1(t *testing.T) {
 	fmt.Println("退出...")
 }
 
+// for循环未关闭的chan也会阻塞panic，但是for循环关闭的chan没问题输出默认值
 func TestChanSyncReadWrite2(t *testing.T) {
 	// 1、创建channel
 	var ch1 = make(chan int, 3)
@@ -91,4 +92,75 @@ func TestChanSyncReadWrite2(t *testing.T) {
 	}()
 
 	wg.Wait()
+}
+
+// 在某些场景下我们需要同时从多个通道接收数据,这个时候就可以用到golang中给我们提供的select多路复用
+func TestChanSelect1(t *testing.T) {
+	intChan := make(chan int, 10)
+	stringChan := make(chan string, 5)
+
+	go func() {
+		//使用select来获取channel里面的数据的时候不需要关闭channel
+		for {
+			select {
+			case v := <-intChan:
+				fmt.Printf("从 intChan 读取的数据%d\n", v)
+			case v := <-stringChan:
+				fmt.Printf("从 stringChan 读取的数据%v\n", v)
+			default:
+				fmt.Printf("数据获取完毕")
+				wg.Done()
+				return //注意退出...
+			}
+		}
+	}()
+
+	wg.Add(1)
+	go func() { //1.定义一个管道 10个数据int
+		for i := 0; i < 10; i++ {
+			time.Sleep(time.Millisecond * 100)
+			intChan <- i
+		}
+		wg.Done()
+	}()
+	wg.Add(1)
+	go func() {
+		//2.定义一个管道 5个数据string
+		for i := 0; i < 5; i++ {
+			time.Sleep(time.Millisecond * 200)
+			stringChan <- "hello" + fmt.Sprintf("%d", i)
+		}
+		wg.Done()
+	}()
+
+	wg.Wait()
+}
+
+// 在某些场景下我们需要同时从多个通道接收数据,这个时候就可以用到golang中给我们提供的select多路复用
+func TestChanSelect2(t *testing.T) {
+	// 在某些场景下我们需要同时从多个通道接收数据,这个时候就可以用到golang中给我们提供的select多路复用
+
+	//1.定义一个管道 10个数据int
+	intChan := make(chan int, 10)
+	for i := 0; i < 10; i++ {
+		intChan <- i
+	}
+	//2.定义一个管道 5个数据string
+	stringChan := make(chan string, 5)
+	for i := 0; i < 5; i++ {
+		stringChan <- "hello" + fmt.Sprintf("%d", i)
+	}
+	time.Sleep(time.Second * 2)
+	//使用select来获取channel里面的数据的时候不需要关闭channel
+	for {
+		select {
+		case v := <-intChan:
+			fmt.Printf("从 intChan 读取的数据%d\n", v)
+		case v := <-stringChan:
+			fmt.Printf("从 stringChan 读取的数据%v\n", v)
+		default:
+			fmt.Printf("数据获取完毕")
+			return //注意退出...
+		}
+	}
 }
