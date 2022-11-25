@@ -1,6 +1,7 @@
 package main
 
 import (
+	"GoTest/common"
 	"context"
 	"fmt"
 	"os"
@@ -12,10 +13,50 @@ import (
 var siganChannel = make(chan os.Signal, 1)
 
 func main() {
-	ContextWithCancel()
+	//ContextWithCancel()
 	//ContextWithTimeout()
 	//ContextWithDeadline()
 	//TimeoutContext()
+	CtxTest()
+}
+
+func CtxTest() {
+	ctx, cancel := context.WithCancel(context.Background())
+	common.Wg.Add(1)
+	go worker(ctx)
+	time.Sleep(time.Second * 3)
+	cancel() // 通知子goroutine结束
+	common.Wg.Wait()
+	fmt.Println("over")
+}
+
+func worker(ctx context.Context) {
+	go worker2(ctx)
+LOOP:
+	for {
+		fmt.Println("worker")
+		time.Sleep(time.Second)
+		select {
+		case <-ctx.Done(): // 等待上级通知
+			break LOOP
+		default:
+		}
+	}
+	common.Wg.Done()
+}
+
+func worker2(ctx context.Context) {
+LOOP:
+	for {
+		fmt.Println("worker2")
+		time.Sleep(time.Second)
+		select {
+		case <-ctx.Done(): // 等待上级通知
+			fmt.Println("worker2 done")
+			break LOOP
+		default:
+		}
+	}
 }
 
 func ContextWithCancel() {
