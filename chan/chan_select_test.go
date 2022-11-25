@@ -3,6 +3,7 @@ package _chan
 import (
 	"fmt"
 	"testing"
+	"time"
 )
 
 // 在某些场景下我们需要同时从多个通道接收数据,这个时候就可以用到golang中给我们提供的select多路复用
@@ -68,5 +69,28 @@ func TestChanSelect2(t *testing.T) {
 			fmt.Printf("数据获取完毕")
 			return //注意退出...
 		}
+	}
+}
+
+func TestChanSelect3(t *testing.T) {
+	// 创建管道
+	ch := make(chan string, 10)
+	// 子协程写数据
+	go func() {
+		for {
+			select {
+			// 写数据
+			case ch <- "hello":
+				fmt.Println("write hello")
+			default:
+				fmt.Println("channel full")
+			}
+			time.Sleep(time.Millisecond * 500)
+		}
+	}()
+	// 取数据
+	for s := range ch {
+		fmt.Println("res:", s)
+		time.Sleep(time.Second)
 	}
 }
