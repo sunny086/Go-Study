@@ -51,6 +51,7 @@ func TestReadFileAtOneTime(t *testing.T) {
 	fmt.Println(string(bytes))
 }
 
+// TestWriteFileByBuff 缓冲流写文件 最后要flush 如果不flush 会导致文件内容不全
 func TestWriteFileByBuff(t *testing.T) {
 	err := ioutil.WriteFile("D:\\test.txt", []byte(""), 0666)
 	dstFile, err := os.OpenFile("D:\\test.txt", os.O_CREATE|os.O_WRONLY, os.ModePerm)
@@ -61,7 +62,7 @@ func TestWriteFileByBuff(t *testing.T) {
 	bufWriter := bufio.NewWriter(dstFile)
 	st := time.Now()
 	defer func() {
-		//flush操作
+		//flush操作 defer是最后 接下来的业务如果涉及文件读取 那读到的就是空文件
 		bufWriter.Flush()
 		dstFile.Close()
 		fmt.Println("文件写入耗时：", time.Now().Sub(st).Seconds(), "s")
