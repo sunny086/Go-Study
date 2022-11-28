@@ -36,16 +36,10 @@ func GetFileType(file []byte) string {
 }
 
 func main() {
-	//readJpgFile()
-	//createOpenWriteFile()
-	//fileSeek()
-	//osStat()
-	//pathMkdir()
-	//fileRemove()
-	//readFile()
-	//removeExcludePath()
-	//CopySoftLinkCommand()
-	//GetAllFileTime()
+	pathMkdir()
+	fileRemove()
+	removeExcludePath()
+	CopySoftLinkCommand()
 
 }
 
@@ -108,53 +102,4 @@ func pathMkdir() {
 		fmt.Println("mkdirAll err: ", err)
 		return
 	}
-}
-
-func osStat() {
-	fileInfo, err := os.Stat("D:\\test.txt")
-	if err != nil {
-		fmt.Println("stat err: ", err)
-		return
-	}
-	fmt.Printf("%T\n", fileInfo) // *os.fileStat
-	fmt.Println(fileInfo.Size())
-	fmt.Println(fileInfo.Mode())
-	fmt.Println(fileInfo.ModTime())
-	fmt.Println(fileInfo.IsDir())
-	fmt.Println(fileInfo.Sys())
-	fmt.Println(fileInfo.Name())
-}
-
-// createOpenWriteFile 创建、打开、写入文件
-func createOpenWriteFile() {
-	f, err := os.Create("D:\\test.txt")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(f) // 打印文件指针
-	f.Close()
-
-	f, err = os.OpenFile("D:\\test.txt", os.O_APPEND|os.O_RDWR, os.ModeAppend)
-	if err != nil {
-		fmt.Println("open file err: ", err)
-		return
-	}
-	defer f.Close()
-
-	// 写入文件内容 写入字节 Write()：
-	n, err := f.Write([]byte("123hello"))
-	if err != nil {
-		fmt.Println("write err: ", err)
-		return
-	}
-	fmt.Println("write number = ", n)
-
-	// 写入文件内容 按字符串写 WriteString()：
-	n, err = f.WriteString("xujinshan") // 会将前5个字符替换为 hello
-	if err != nil {
-		fmt.Println("write err: ", err)
-		return
-	}
-	fmt.Println("write number = ", n)
 }
