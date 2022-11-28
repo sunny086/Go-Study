@@ -30,3 +30,50 @@ func TestWriteFileByBuff(t *testing.T) {
 		bufWriter.WriteString(strconv.Itoa(i) + "\n")
 	}
 }
+
+// TestWriteFileByString
+func TestWriteFileByString(t *testing.T) {
+	filePath := "./write_string.txt"
+	_, err := os.Create(filePath)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	f, err := os.OpenFile(filePath, os.O_APPEND|os.O_RDWR, os.ModeAppend)
+	if err != nil {
+		fmt.Println("open file err: ", err)
+		return
+	}
+	defer f.Close()
+
+	// 写入文件内容 按字符串写 WriteString()：
+	n, err := f.WriteString("xujinshan")
+	if err != nil {
+		fmt.Println("write err: ", err)
+		return
+	}
+	fmt.Println("write number = ", n)
+}
+
+// TestWriteFileByBytes
+func TestWriteFileByBytes(t *testing.T) {
+	filePath := "./write_byte.txt"
+	_, err := os.Create(filePath)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	f, err := os.OpenFile(filePath, os.O_APPEND|os.O_RDWR, os.ModeAppend)
+	if err != nil {
+		fmt.Println("open file err: ", err)
+		return
+	}
+	defer f.Close()
+	// 写入文件内容 写入字节 Write()：
+	n, err := f.Write([]byte("123hello"))
+	if err != nil {
+		fmt.Println("write err: ", err)
+		return
+	}
+	fmt.Println("write number = ", n)
+}
