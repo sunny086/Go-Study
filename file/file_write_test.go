@@ -3,7 +3,6 @@ package file
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strconv"
 	"testing"
@@ -12,12 +11,9 @@ import (
 
 // TestWriteFileByBuff 缓冲流写文件 最后要flush 如果不flush 会导致文件内容不全
 func TestWriteFileByBuff(t *testing.T) {
-	err := ioutil.WriteFile("D:\\test.txt", []byte(""), 0666)
-	dstFile, err := os.OpenFile("D:\\test.txt", os.O_CREATE|os.O_WRONLY, os.ModePerm)
-	if err != nil {
-		fmt.Println("open file err:", err)
-		return
-	}
+	filepath := "./write_buff.txt"
+	//_ = ioutil.WriteFile(filepath, []byte(""), 0666)
+	dstFile, _ := os.OpenFile(filepath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, os.ModePerm)
 	bufWriter := bufio.NewWriter(dstFile)
 	st := time.Now()
 	defer func() {
@@ -26,7 +22,7 @@ func TestWriteFileByBuff(t *testing.T) {
 		dstFile.Close()
 		fmt.Println("文件写入耗时：", time.Now().Sub(st).Seconds(), "s")
 	}()
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 10; i++ {
 		bufWriter.WriteString(strconv.Itoa(i) + "\n")
 	}
 }
