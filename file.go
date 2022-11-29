@@ -2,11 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"os"
 	"os/exec"
-	"path"
-	"path/filepath"
 )
 
 // 根据文件头获取文件类型
@@ -36,9 +32,6 @@ func GetFileType(file []byte) string {
 }
 
 func main() {
-	pathMkdir()
-	fileRemove()
-	removeExcludePath()
 	CopySoftLinkCommand()
 
 }
@@ -63,43 +56,4 @@ func CopySoftLinkCommand() {
 		}
 		log.Printf("Copied %d bytes.", written)*/
 
-}
-
-func removeExcludePath() {
-	//dir, err := ioutil.ReadDir(models.TempDir)
-	//for _, d := range dir {
-	//	os.RemoveAll(path.Join([]string{models.TempDir, d.Name()}...))
-	//}
-	dir, _ := ioutil.ReadDir("./dd")
-	for _, d := range dir {
-		os.RemoveAll(path.Join([]string{"./dd", d.Name()}...))
-	}
-}
-
-func fileRemove() {
-	err := os.RemoveAll("./dd")
-	if err != nil {
-		fmt.Println("remove err:", err)
-		return
-	}
-}
-
-func pathMkdir() {
-	// 路径操作
-	fmt.Println(filepath.IsAbs("./test.txt")) // false：判断是否是绝对路径
-	fmt.Println(filepath.Abs("./test.txt"))   // 转换为绝对路径
-
-	// 创建目录
-	err := os.Mkdir("./test", os.ModePerm)
-	if err != nil {
-		fmt.Println("mkdir err: ", err)
-		return
-	}
-
-	// 创建多级目录
-	err = os.MkdirAll("./dd/rr", os.ModePerm)
-	if err != nil {
-		fmt.Println("mkdirAll err: ", err)
-		return
-	}
 }

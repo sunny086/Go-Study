@@ -2,7 +2,9 @@ package file
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
+	"path"
 	"testing"
 )
 
@@ -84,3 +86,10 @@ func TestRemoveFromRootPath(t *testing.T) {
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
+
+func TestRemoveExcludePath(t *testing.T) {
+	dir, _ := ioutil.ReadDir("../dd")
+	for _, d := range dir {
+		os.RemoveAll(path.Join([]string{"../dd", d.Name()}...))
+	}
+}
