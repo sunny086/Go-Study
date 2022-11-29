@@ -1,59 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"os/exec"
-)
-
-// 根据文件头获取文件类型
-func GetFileType(file []byte) string {
-	if len(file) < 4 {
-		return ""
-	}
-	if file[0] == 0xFF && file[1] == 0xD8 && file[2] == 0xFF {
-		return "jpg"
-	}
-	if file[0] == 0x89 && file[1] == 0x50 && file[2] == 0x4E && file[3] == 0x47 {
-		return "png"
-	}
-	if file[0] == 0x47 && file[1] == 0x49 && file[2] == 0x46 {
-		return "gif"
-	}
-	if file[0] == 0x42 && file[1] == 0x4D {
-		return "bmp"
-	}
-	if file[0] == 0x49 && file[1] == 0x49 && file[2] == 0x2A && file[3] == 0x00 {
-		return "tiff"
-	}
-	if file[0] == 0x4D && file[1] == 0x4D && file[2] == 0x00 && file[3] == 0x2A {
-		return "tiff"
-	}
-	return ""
-}
-
 func main() {
-	CopySoftLinkCommand()
-
-}
-
-func CopySoftLinkCommand() {
-	err2 := exec.Command("bash", "-c", "cp -d /opt/usb/soft_link_bak11 /opt/usb/soft_link_bak111").Run()
-	fmt.Println(err2)
-
-	//下面这种 直接copy会报错被拷贝的是个目录
-	/*	file, err := os.Open("/opt/usb/soft_link")
-		if err != nil {
-			fmt.Println(err)
-		}
-		create, err := os.Create("/opt/usb/soft_link_copy")
-		if err != nil {
-			fmt.Println(err)
-		}
-		written, err := io.Copy(create, file)
-		if err != nil {
-			//2022/08/13 16:14:39 read /opt/usb/soft_link: is a directory
-			log.Fatal(err)
-		}
-		log.Printf("Copied %d bytes.", written)*/
 
 }
