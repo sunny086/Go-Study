@@ -32,10 +32,10 @@ func TestReflect_SetStructValueByFieldArray(t *testing.T) {
 			//字段存在 设置属性值
 			reflect.ValueOf(&req).Elem().FieldByName(fieldKey).SetString(req.SearchContent)
 			tag := field.Tag
-			fmt.Println(tag)
+			fmt.Println("tag:", tag)
 			// 获取json属性
 			jsonTagValue := field.Tag.Get("json")
-			fmt.Println(jsonTagValue)
+			fmt.Println("json:", jsonTagValue)
 		}
 	}
 	//解析成字符串

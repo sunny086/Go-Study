@@ -155,7 +155,9 @@ func TestReflect_TypeOf_Elem(t *testing.T) {
 	}
 	person := Person{"lisi", 13}
 	personTypeOf := reflect.TypeOf(&person)
+	//*person's type is *refelct.Person ,kind is ptr
 	fmt.Printf("*person's type is %s ,kind is %s \n", personTypeOf, personTypeOf.Kind())
+	//*person's type is refelct.Person ,kind is struct
 	elem := reflect.TypeOf(&person).Elem()
 	//*person's type is refelct.Person ,kind is struct
 	fmt.Printf("*person's type is %s ,kind is %s \n", elem, elem.Kind())
