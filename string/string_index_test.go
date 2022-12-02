@@ -21,7 +21,9 @@ func TestStringIndex(t *testing.T) {
 	macStartIndex := strings.Index(line, "MAC=")
 	macEndIndex := strings.Index(line, "SRC=")
 	if macStartIndex >= 0 && macEndIndex >= 0 {
-		mac := line[macStartIndex+4 : macStartIndex+4+17]
-		println(mac)
+		mac1 := line[macStartIndex+4 : macStartIndex+4+17]
+		mac2 := line[macStartIndex+4+17+1 : macStartIndex+4+17+1+17]
+		println(mac1)
+		println(mac2)
 	}
 }
