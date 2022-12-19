@@ -26,9 +26,10 @@ import (
 递归处理结果二元组，直到没有重叠的区间。
 */
 func TestMergeIp(t *testing.T) {
-	r := MergeIPs([]string{
-		"10.25.10.1",
-		"10.25.10.10",
+	r := MergeIPs2([]string{
+		"10.25.10.1/24",
+		"10.25.10.1/23",
+		"10.25.10.10/25",
 		"10.25.10.15",
 		"10.25.10.1/24",
 		"10.25.10.1/28",
@@ -62,6 +63,41 @@ func MergeIPs(ips []string) []netip.Prefix {
 			if err != nil {
 				panic("")
 			}
+		}
+		um(pre)
+	}
+
+	var r []netip.Prefix
+	for k, _ := range m {
+		r = append(r, k)
+	}
+	return r
+}
+
+func MergeIPs2(ips []string) []netip.Prefix {
+	var m = make(map[netip.Prefix]struct{})
+	var um = func(n netip.Prefix) {
+		for oln := range m {
+			if n.Contains(oln.Addr()) {
+				if n.Bits() < oln.Bits() {
+					delete(m, oln)
+				} else {
+					return
+				}
+			}
+		}
+		m[n] = struct{}{}
+	}
+
+	for _, ip := range ips {
+		pre, err := netip.ParsePrefix(ip)
+		if err != nil {
+			fmt.Println(err)
+			addr, err := netip.ParseAddr(ip)
+			if err != nil {
+				fmt.Println(err)
+			}
+			pre = netip.PrefixFrom(addr, addr.BitLen())
 		}
 		um(pre)
 	}
