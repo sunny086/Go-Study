@@ -1,6 +1,11 @@
 package slice
 
-import "testing"
+import (
+	"fmt"
+	"sort"
+	"strings"
+	"testing"
+)
 
 // 测试去重
 func TestDataDuplicate(t *testing.T) {
@@ -45,4 +50,27 @@ func DataDuplicate(strList []string) int {
 		strList[left] = strList[right]
 	}
 	return left + 1
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+// []string 去重 但是有一个bug 必须初始化一下这个string数组{""}
+func RemoveDuplicate(list []string) []string {
+	// 这个排序很关键
+	sort.Strings(list)
+	i := 0
+	var newlist = []string{""}
+	for j := 0; j < len(list); j++ {
+		if strings.Compare(newlist[i], list[j]) == -1 {
+			newlist = append(newlist, list[j])
+			i++
+		}
+	}
+	return newlist
+}
+
+func TestDuplicate(t *testing.T) {
+	test := []string{"10.25.10.1", "10.25.10.11", "10.25.10.12", "10.25.10.12", "10.25.10.1", "10.25.10.11"}
+	duplicate := RemoveDuplicate(test)
+	fmt.Println(duplicate)
 }

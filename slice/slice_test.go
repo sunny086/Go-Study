@@ -2,31 +2,8 @@ package slice
 
 import (
 	"fmt"
-	"sort"
-	"strings"
 	"testing"
 )
-
-// []string 去重
-func RemoveDuplicate(list []string) []string {
-	// 这个排序很关键
-	sort.Strings(list)
-	i := 0
-	var newlist = []string{""}
-	for j := 0; j < len(list); j++ {
-		if strings.Compare(newlist[i], list[j]) == -1 {
-			newlist = append(newlist, list[j])
-			i++
-		}
-	}
-	return newlist
-}
-
-func TestDuplicate(t *testing.T) {
-	test := []string{"10.25.10.1", "10.25.10.11", "10.25.10.12", "10.25.10.12", "10.25.10.1", "10.25.10.11"}
-	duplicate := RemoveDuplicate(test)
-	fmt.Println(duplicate)
-}
 
 func TestDiff(t *testing.T) {
 	src := []string{"10.25.10.1", "10.25.10.2", "10.25.10.3", "10.25.10.4", "10.25.10.5", "10.25.10.6"}
