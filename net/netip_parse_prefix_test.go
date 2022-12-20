@@ -28,3 +28,23 @@ func TestPrefix1(t *testing.T) {
 	ip := prefix.IsSingleIP()
 	t.Log(ip) //true
 }
+
+func TestPrefix2(t *testing.T) {
+	prefix, _ := netip.ParsePrefix("10.25.10.1/32")
+	text, err := prefix.MarshalText()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(string(text))
+
+	prefix2, _ := netip.ParsePrefix("10.25.10.2/32")
+	to := prefix2.AppendTo(text)
+	t.Log(string(to))
+	t.Log(prefix2.String())
+	ip := prefix2.IsSingleIP()
+	t.Log(ip) //true
+
+	overlaps := prefix2.Overlaps(prefix)
+	t.Log(overlaps) //false
+}
