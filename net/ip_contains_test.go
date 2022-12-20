@@ -39,3 +39,31 @@ func TestCidrContainsSingleIP2(t *testing.T) {
 	contains := prefix.Contains(addr)
 	t.Log(contains) //true
 }
+
+func TestCidrContainsCidr(t *testing.T) {
+
+	//prefix的addr相同，但是bitSize不同，比较bitSize大小，舍弃小的cidr
+
+	//source := []string{
+	//	"10.25.10.1/24",
+	//	"10.25.10.1/28",
+	//}
+	bigIp, _ := netip.ParsePrefix("10.25.10.1/24")
+	smallIp, _ := netip.ParsePrefix("10.25.10.128/25")
+	t.Log(smallIp.Addr())
+	contains := bigIp.Contains(smallIp.Addr())
+	t.Log(contains)
+
+	//cidr, ipNet, err := net.ParseCIDR("10.25.2.128/23")
+	//cidr, ipNet, err := net.ParseCIDR("10.25.2.128/24")
+
+}
+
+// ContainsCIDR 子网a 是否包含 子网b
+// b 是 a 的子集
+// return true - b是a的子网; false b 不是 a 的子网
+func ContainsCIDR(a, b *net.IPNet) bool {
+	ones1, _ := a.Mask.Size()
+	ones2, _ := b.Mask.Size()
+	return ones1 <= ones2 && a.Contains(b.IP)
+}
