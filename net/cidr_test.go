@@ -25,12 +25,11 @@ func SubnetMask2CIDR(subnetMask string) int {
 	return size
 }
 
-func TestParseCIDR(t *testing.T) {
-	ip, ipNet, err := net.ParseCIDR("10.25.10.1/24")
-	if err != nil {
-		t.Fatal(err)
-		return
-	}
-	t.Log(ip.Equal(ipNet.IP))
-	t.Log(ipNet.IP.String())
+// 直接使用net.ParseCIDR来解析cidr字符串，返回的是IP和IPNet;
+// 但是发现parse解析出来的Ip是字符串里面的，但是IPNet.IP如果不是32位的bitSize那就是是0结尾的；
+func TestParseCIDR1(t *testing.T) {
+	cidr, ipNet, _ := net.ParseCIDR("10.25.10.1/24")
+	t.Log(cidr.Equal(ipNet.IP)) //false
+	t.Log(ipNet.IP.String())    //10.25.10.0--------->只要不是32，解析出来的都是0结尾的
+	t.Log(cidr)                 //10.25.10.1--------->我们发现parse解析出来的Ip是字符串里面的，但是IPNet里面的IP是0结尾的
 }
