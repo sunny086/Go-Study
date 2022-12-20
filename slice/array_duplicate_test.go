@@ -10,6 +10,23 @@ func TestDataDuplicate(t *testing.T) {
 	t.Log(strList[:DataDuplicate(strList)]) //[1 2 3 4 5 3 4 5]
 }
 
+// 测试去重 因为使用的是同一个地址引用 调用多次会导致数据变化
+func TestDataDuplicate2(t *testing.T) {
+	strList := []string{
+		"10.25.10.1",
+		"10.25.10.1",
+		"10.25.10.2",
+		"10.25.10.2",
+		"10.25.10.3",
+		"10.25.10.3",
+		"10.25.10.1/24",
+		"10.25.10.1/24",
+	}
+	t.Log(DataDuplicate(strList)) //第一次调用
+	t.Log(strList)
+	t.Log(strList[:DataDuplicate(strList)]) //第二次调用，所以结果有问题
+}
+
 // 返回去重后的数据长度 最后一个元素的索引下标
 func DataDuplicate(strList []string) int {
 	//如果是空切片，那就返回0
