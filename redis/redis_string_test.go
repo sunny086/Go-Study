@@ -6,17 +6,26 @@ import (
 	"testing"
 )
 
-func NewClient() *redis.Client {
-	client := redis.NewClient(&redis.Options{
+//func NewClient() *redis.Client {
+//	client := redis.NewClient(&redis.Options{
+//		Addr:     "10.25.10.126:6379",
+//		Password: "Netvine123#@!", // no password set
+//		DB:       4,               // use default DB
+//	})
+//	return client
+//}
+
+var client *redis.Client
+
+func init() {
+	client = redis.NewClient(&redis.Options{
 		Addr:     "10.25.10.126:6379",
 		Password: "Netvine123#@!", // no password set
 		DB:       4,               // use default DB
 	})
-	return client
 }
 
 func TestString(t *testing.T) {
-	client := NewClient()
-	val := client.Get(context.Background(), "addressBlacklist:22.22.22.22").Val()
+	val := client.Get(context.Background(), "auxConfig:upperStorageLimit").Val()
 	t.Log("val:", val)
 }
