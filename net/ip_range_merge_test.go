@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 	"net/netip"
+	"sort"
 	"strconv"
 	"strings"
 	"testing"
@@ -47,7 +48,7 @@ func SubnetMask2CIDR(subnetMask string) int {
 最后遍历结果二元组，把left right相同的二元组处理成一个数据。
 递归处理结果二元组，直到没有重叠的区间。
 */
-func TestMergeIp(t *testing.T) {
+func TestMergeIp1(t *testing.T) {
 	r := MergeIPs2([]string{
 		"10.25.10.1/24",
 		"10.25.10.1/23",
@@ -131,6 +132,70 @@ func MergeIPs2(ips []string) []netip.Prefix {
 	return r
 }
 
+func TestMergeIp2(t *testing.T) {
+	//区分单个ip ip段和cidr形式的ip
+	source := []string{
+		"10.25.10.1",
+		"10.25.10.2",
+		"10.25.10.3",
+		"10.25.10.1",
+		"10.25.10.2",
+		"10.25.10.3",
+		"10.25.10.1/24",
+		"10.25.11.1",
+		"10.25.11.2",
+		"10.25.11.3",
+		"10.25.11.4",
+		"10.25.11.5",
+		"10.25.11.6",
+		"10.25.11.7",
+		"10.25.11.8",
+		"10.25.11.9",
+		"10.25.11.10",
+		"10.25.11.1-10.25.11.8",
+		"10.25.17.10-10.25.17.11",
+		"10.25.16.1/255.255.255.0",
+		"10.25.11.1-10.25.11.8",
+		"10.25.17.10-10.25.17.11",
+		"10.25.16.1/255.255.255.0",
+		"10.25.11.1/24",
+	}
+	singleIpList, ipRangeList, cidrList, err := DivideIp(source)
+	if err != nil {
+		t.Log(err)
+		return
+	}
+	//三个ip进行去重
+	ipRangeList = ipRangeList[:RemoveDuplicateData(ipRangeList)]
+	cidrList = cidrList[:RemoveDuplicateData(cidrList)]
+	//ip段转成单个ip
+	ipRange2IpList, err := IPRange2Ip(ipRangeList)
+	singleIpList = append(singleIpList, ipRange2IpList...)
+	//合并之后再去重
+	singleIpList = singleIpList[:RemoveDuplicateData(singleIpList)]
+	//cidr合并去重
+	cidrDuplicateList, ipNetList, err := RemoveDuplicateCIDR(cidrList)
+	//判断每个ip是否在cidr中
+	var singleIpDuplicateList []string
+	for _, ip := range singleIpList {
+		var b bool
+		for _, ipNet := range ipNetList {
+			if ipNet.Contains(net.ParseIP(ip)) {
+				b = true
+				//去除重复的单个ip
+				continue
+			}
+		}
+		if !b {
+			singleIpDuplicateList = append(singleIpDuplicateList, ip)
+		}
+	}
+	t.Log(cidrDuplicateList)
+	t.Log(singleIpDuplicateList)
+	res := append(cidrDuplicateList, singleIpDuplicateList...)
+	t.Log(res)
+}
+
 // 测试IP去重取并集
 func TestDivideIP(t *testing.T) {
 	//区分单个ip ip段和cidr形式的ip
@@ -161,15 +226,6 @@ func TestDivideIP(t *testing.T) {
 		t.Log(err)
 		return
 	}
-	//三个ip进行去重
-	ipRangeList = ipRangeList[:RemoveDuplicateData(ipRangeList)]
-	cidrList = cidrList[:RemoveDuplicateData(cidrList)]
-	//ip段转成单个ip
-	ipRange2IpList, err := IPRange2Ip(ipRangeList)
-	singleIpList = append(singleIpList, ipRange2IpList...)
-	//合并之后再去重
-	singleIpList = singleIpList[:RemoveDuplicateData(singleIpList)]
-	//cidr合并去重
 
 	t.Log(singleIpList)
 	t.Log(ipRangeList)
@@ -216,6 +272,7 @@ func ParseCIDR(cidrIp string) (cidrParseIp string, err error) {
 }
 
 func RemoveDuplicateData(strList []string) int {
+	sort.Strings(strList)
 	//如果是空切片，那就返回0
 	if len(strList) == 0 {
 		return 0
