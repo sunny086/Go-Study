@@ -23,3 +23,11 @@ func TestStringSplitAfterN(t *testing.T) {
 	fmt.Println(splitAfterN)      //[1a 2a 3a 4a5a6a7a8a9]
 	fmt.Println(len(splitAfterN)) //4
 }
+
+func TestSplit(t *testing.T) {
+	s := "cm-1#1000#cmTag"
+	splitN := strings.SplitN(s, "#", 3)
+	fmt.Println(splitN) //[cm-1 1000 cmTag]
+	split := strings.Split(s, "#")
+	fmt.Println(split) //[cm-1 1000 cmTag]
+}
