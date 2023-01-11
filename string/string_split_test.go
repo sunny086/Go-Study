@@ -24,10 +24,21 @@ func TestStringSplitAfterN(t *testing.T) {
 	fmt.Println(len(splitAfterN)) //4
 }
 
-func TestSplit(t *testing.T) {
+func TestSplitLogTag(t *testing.T) {
 	s := "cm-1#1000#cmTag"
 	splitN := strings.SplitN(s, "#", 3)
 	fmt.Println(splitN) //[cm-1 1000 cmTag]
 	split := strings.Split(s, "#")
 	fmt.Println(split) //[cm-1 1000 cmTag]
+}
+func TestSplitDpiLog(t *testing.T) {
+	str := "(0,'10.4.14.102','10.130.130.130',1,'UDP','fins',56,0,'Fins Response timeout, Please Check Operation Rationality!','N/A','{protocol:fins,comc:514}', '2022-08-30 17:05:58',0,'00D003B3A7FC00137297A2D408004500002A828B4000401112CA0A040E660A828282E562258000167DF0C100020000000000007A0C010205', '00:13:72:97:a2:d4','00:d0:03:b3:a7:fc',58722,9600,'24507')"
+	split := strings.Split(str[1:len(str)-1], ",")
+	fmt.Println(split)
+	sourceIp := strings.Trim(split[1], "'")
+	destinationIp := strings.Trim(split[2], "'")
+	action := strings.Trim(split[3], "'")
+	fmt.Println(sourceIp)
+	fmt.Println(destinationIp)
+	fmt.Println(action)
 }
