@@ -1,6 +1,7 @@
-package zap
+package core
 
 import (
+	"GoTest/zap_test/config"
 	"fmt"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -13,9 +14,9 @@ type _zap struct{}
 
 // GetEncoder 获取 zapcore.Encoder
 func (z *_zap) GetEncoder() zapcore.Encoder {
-	//if global.NETVINE_CONFIG.Zap.Format == "json" {
-	//	return zapcore.NewJSONEncoder(z.GetEncoderConfig())
-	//}
+	if config.ZapConfigDefault.Format == "json" {
+		return zapcore.NewJSONEncoder(z.GetEncoderConfig())
+	}
 	return zapcore.NewConsoleEncoder(z.GetEncoderConfig())
 }
 
@@ -27,9 +28,9 @@ func (z *_zap) GetEncoderConfig() zapcore.EncoderConfig {
 		TimeKey:        "time",
 		NameKey:        "logger",
 		CallerKey:      "caller",
-		StacktraceKey:  "stacktrace",
+		StacktraceKey:  config.ZapConfigDefault.StacktraceKey,
 		LineEnding:     zapcore.DefaultLineEnding,
-		EncodeLevel:    zapcore.CapitalLevelEncoder, // 小写编码器
+		EncodeLevel:    config.ZapConfigDefault.ZapEncodeLevel(),
 		EncodeTime:     z.CustomTimeEncoder,
 		EncodeDuration: zapcore.SecondsDurationEncoder,
 		EncodeCaller:   zapcore.FullCallerEncoder,
@@ -49,15 +50,15 @@ func (z *_zap) GetEncoderCore(l zapcore.Level, level zap.LevelEnablerFunc) zapco
 
 // CustomTimeEncoder 自定义日志输出时间格式
 func (z *_zap) CustomTimeEncoder(t time.Time, encoder zapcore.PrimitiveArrayEncoder) {
-	encoder.AppendString("[Gorilla]" + t.Format("2006/01/02 - 15:04:05.000"))
+	encoder.AppendString(config.ZapConfigDefault.Prefix + t.Format("2006/01/02 - 15:04:05.000"))
 }
 
 // GetZapCores 根据配置文件的Level获取 []zapcore.Core
 func (z *_zap) GetZapCores() []zapcore.Core {
 	cores := make([]zapcore.Core, 0, 7)
-	//for level := global.NETVINE_CONFIG.Zap.TransportLevel(); level <= zapcore.FatalLevel; level++ {
-	//	cores = append(cores, z.GetEncoderCore(level, z.GetLevelPriority(level)))
-	//}
+	for level := config.ZapConfigDefault.TransportLevel(); level <= zapcore.FatalLevel; level++ {
+		cores = append(cores, z.GetEncoderCore(level, z.GetLevelPriority(level)))
+	}
 	return cores
 }
 
