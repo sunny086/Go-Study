@@ -80,7 +80,8 @@ func TestAssignTim2Timestamp(t *testing.T) {
 
 // 时间戳转为时间
 func TestTimestamp2Time(t *testing.T) {
-	timestamp := int64(1677196800)
+	//redis中配置的令牌过期时间 15768000000 单位秒
+	timestamp := int64(17443323226)
 	timeObj := time.Unix(timestamp, 0)
 	fmt.Println(timeObj.Format("2006-01-02 15:04:05"))
 }
