@@ -65,3 +65,22 @@ func TestTimeAddDuration(t *testing.T) {
 	sumD := now.Sub(d1)
 	fmt.Printf("%v 天\n", sumD.Hours()/24)
 }
+
+// 当前时间转换为时间戳
+func TestNow2Timestamp(t *testing.T) {
+	fmt.Printf("当前的时间戳是：%v", time.Now().Unix())
+}
+
+// 指定时间转为时间戳
+func TestAssignTim2Timestamp(t *testing.T) {
+	str := "2023-02-24 00:00:00"
+	tm, _ := time.Parse("2006-01-02 15:04:05", str)
+	fmt.Printf(str+"的时间戳是：%v", tm.Unix())
+}
+
+// 时间戳转为时间
+func TestTimestamp2Time(t *testing.T) {
+	timestamp := int64(1677196800)
+	timeObj := time.Unix(timestamp, 0)
+	fmt.Println(timeObj.Format("2006-01-02 15:04:05"))
+}
