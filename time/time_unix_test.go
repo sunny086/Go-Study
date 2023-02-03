@@ -68,7 +68,11 @@ func TestTimeAddDuration(t *testing.T) {
 
 // 当前时间转换为时间戳
 func TestNow2Timestamp(t *testing.T) {
-	fmt.Printf("当前的时间戳是：%v", time.Now().Unix())
+	fmt.Printf("当前的时间戳是：%v\n", time.Now().Unix())
+	//一天前的时间戳
+	fmt.Printf("一天前的时间戳是：%v\n", time.Now().AddDate(0, 0, -1).Unix())
+	//一天后的时间戳
+	fmt.Printf("一天后的时间戳是：%v\n", time.Now().AddDate(0, 0, 1).Unix())
 }
 
 // 指定时间转为时间戳
