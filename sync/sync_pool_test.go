@@ -2,6 +2,7 @@ package sync
 
 import (
 	"fmt"
+	"net/http"
 	"sync"
 	"testing"
 )
@@ -49,3 +50,37 @@ func TestSyncPool(t *testing.T) {
 //4. 对象池中的对象应该是相对较小的，否则会增加内存占用。在大多数情况下，对象池中的对象应该是固定大小的。
 //5. 对象池应该被设计成并发安全的。多个 Goroutine 可以同时访问对象池，因此需要保证对象池的线程安全性。
 //需要注意的是，由于对象池中的对象可以被多次获取和放回，因此在使用完之后需要清理对象中的敏感信息，以免泄露敏感信息。此外，由于对象池会减少垃圾回收的次数，因此在使用完之后需要将对象放回池中，以便下一次复用。
+
+// ----------------------------------------------------------------------------------------------------------------------
+// 由于 sync.Pool 是一个并发安全的对象池，多个 goroutine 可以同时从中获取和放回对象，因此我们需要在处理 Request 对象时进行适当的同步，以避免出现竞态条件。
+// 一种解决方法是为每个 goroutine 分配一个 Request 对象，这样就不需要进行同步操作。
+// 另一种解决方法是使用一个 sync.Mutex 对象对 Request 对象进行保护，这样可以确保同一时间只有一个 goroutine 在处理 Request 对象。下面是使用 Mutex 的示例代码：
+func TestSyncPoolConcurrent(t *testing.T) {
+	http.HandleFunc("/", handleRequest)
+	http.ListenAndServe(":8080", nil)
+}
+
+var reqPool = sync.Pool{
+	New: func() interface{} {
+		return &http.Request{}
+	},
+}
+
+func handleRequest(w http.ResponseWriter, r *http.Request) {
+	// 从对象池中获取 Request 对象
+	req := reqPool.Get().(*http.Request)
+
+	// 对 Request 对象加锁，保护它的状态
+	reqLock := sync.Mutex{}
+	reqLock.Lock()
+
+	// 处理请求
+	// ...
+
+	// 请求处理完成后释放锁并将 Request 对象放回对象池
+	reqLock.Unlock()
+	reqPool.Put(req)
+}
+
+//在上面的示例中，我们为每个 Request 对象分配了一个 Mutex 对象来进行同步，以避免出现竞态条件。在处理 Request 对象时，我们首先从对象池中获取一个 Request 对象，然后为它分配一个 Mutex 对象进行同步，处理完请求后再将 Request 对象放回对象池。
+//需要注意的是，使用 Mutex 的方法会影响性能，因为在处理 Request 对象时需要进行加锁和解锁操作。如果您的应用程序在高并发情况下需要处理大量的请求，建议使用第一种方法为每个 goroutine 分配一个 Request 对象。
