@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/shirou/gopsutil/net"
-	"github.com/vishvananda/netlink"
 	"os"
 	"strconv"
 	"strings"
@@ -75,31 +74,6 @@ func findCounter(counters []net.IOCountersStat, name string) *net.IOCountersStat
 		}
 	}
 	return nil
-}
-
-// 就这个吧 貌似可以
-func TestNetSpeed3(t *testing.T) {
-	link, err := netlink.LinkByName("enp1s0")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	// 获取收包速率、发包速率和实时速率
-	lastRx := link.Attrs().Statistics.RxBytes
-	lastTx := link.Attrs().Statistics.TxBytes
-
-	time.Sleep(time.Second)
-	link2, err := netlink.LinkByName("enp1s0")
-	if err != nil {
-		fmt.Println(err)
-	}
-	rx := link2.Attrs().Statistics.RxBytes
-	tx := link2.Attrs().Statistics.TxBytes
-	rxRate := float64(rx-lastRx) / 1024
-	txRate := float64(tx-lastTx) / 1024
-	lastRx = rx
-	lastTx = tx
-	fmt.Printf("收包速率：%.2f KB/s, 发包速率：%.2f KB/s\n", rxRate, txRate)
 }
 
 // 这个也行
