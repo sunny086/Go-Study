@@ -9,16 +9,12 @@ import (
 
 func TestCronParse(t *testing.T) {
 	GenerateCornExecuteTime("0 0 31 * *")
-	//// 生成cron表达式
-	//spec := "0 0 28-31 * *"
-	//expr := cron.NewParser(cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow).MustParse(spec)
-	//fmt.Println(expr)
 }
 
 // GenerateCornExecuteTime 测试cron表达式的执行时间
 func GenerateCornExecuteTime(cronStr string) {
 	// 解析cron表达式
-	specParser := cron.NewParser(cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)
+	specParser := cron.NewParser(cron.Second | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)
 	schedule, err := specParser.Parse(cronStr)
 	if err != nil {
 		fmt.Println(err)
