@@ -3,11 +3,21 @@ package cron
 import (
 	"fmt"
 	"testing"
+	"time"
 )
+
+func TestTimeParse(t *testing.T) {
+	//解析时分秒08:08:08
+	t1, _ := time.Parse("15:04:05", "08:08:08")
+	hour := t1.Hour()
+	minute := t1.Minute()
+	second := t1.Second()
+	fmt.Println(hour, minute, second)
+}
 
 // TestCronGenerate1 时分秒参数生成cron表达式 然后生成执行时间
 func TestCronGenerate1(t *testing.T) {
-	dailyCron := generateDailyCron(1, 1, 1)
+	dailyCron := generateDailyCron(02, 01, 01)
 	GenerateCornExecuteTime(dailyCron)
 }
 
@@ -23,8 +33,8 @@ func TestCronGenerate2(t *testing.T) {
 	GenerateCornExecuteTime(weeklyCron)
 }
 
-func generateWeeklyCron(dow, hour, minute, second int) string {
-	spec := fmt.Sprintf("%d %d %d * * %d", second, minute, hour, dow)
+func generateWeeklyCron(dayOfWeek, hour, minute, second int) string {
+	spec := fmt.Sprintf("%d %d %d * * %d", second, minute, hour, dayOfWeek)
 	return spec
 }
 
@@ -32,8 +42,8 @@ func TestCronGenerate3(t *testing.T) {
 	monthlyCron := generateMonthCron(1, 1, 1, 1)
 	GenerateCornExecuteTime(monthlyCron)
 }
-func generateMonthCron(month, hour, minute, second int) string {
-	spec := fmt.Sprintf("%d %d %d %d * *", second, minute, hour, month)
+func generateMonthCron(dayOfMonth, hour, minute, second int) string {
+	spec := fmt.Sprintf("%d %d %d %d * ?", second, minute, hour, dayOfMonth)
 	return spec
 }
 

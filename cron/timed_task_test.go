@@ -2,6 +2,7 @@ package cron
 
 import (
 	"fmt"
+	"github.com/robfig/cron/v3"
 	"testing"
 	"time"
 
@@ -19,6 +20,11 @@ func (job mockJob) Run() {
 func mockFunc() {
 	time.Sleep(time.Second)
 	fmt.Println("1s...")
+}
+
+func mockFunc2() {
+	time.Sleep(time.Second)
+	fmt.Println("2s...")
 }
 
 func TestNewTimerTask(t *testing.T) {
@@ -64,4 +70,17 @@ func TestNewTimerTask(t *testing.T) {
 			t.Error("find func")
 		}
 	}
+}
+
+func TestCronTaskInit(t *testing.T) {
+	task := NewTimerTask()
+	option := []cron.Option{cron.WithSeconds()}
+	entryID, err := task.AddTaskByFunc("test", "*/4 * * * * *", mockFunc, option...)
+	assert.Nil(t, err)
+	assert.Equal(t, entryID, 1)
+	time.Sleep(time.Second * 15)
+	_, _ = task.AddTaskByFunc("test", "*/4 * * * * *", mockFunc2, option...)
+	time.Sleep(time.Second * 15)
+	task.Clear("test")
+	time.Sleep(time.Second * 50)
 }
