@@ -1,6 +1,7 @@
 package log
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -30,4 +31,15 @@ func simpleHttpGet(url string) {
 		log.Printf("Status Code for %s : %s", url, resp.Status)
 		resp.Body.Close()
 	}
+}
+
+// Only difference between those in terms of its printing behaviour is
+// - `log.Println` writes to `Stderr`
+// - `fmt.Println` writes to `Stdout`
+// Both are not buffered. So the fact that `StdOut` came before `StdError` is specific to your terminal or environment.
+func TestLogPrintln(t *testing.T) {
+	var a string = "initail"
+	log.Println(a)
+	var b, c int = 1, 2
+	fmt.Println(b, c)
 }
