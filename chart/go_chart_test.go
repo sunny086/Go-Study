@@ -21,10 +21,16 @@ type ReportData struct {
 }
 
 type ProtocolTypeStatistic struct {
-	ProtocolCount      int    //协议数量
-	MaxProtocolName    string //最大协议名称
-	MaxProtocolPercent string //最大协议百分比
-	ImgData            string //图片数据
+	ProtocolCount      int              //协议数量
+	MaxProtocolName    string           //最大协议名称
+	MaxProtocolPercent string           //最大协议百分比
+	ImgData            string           //图片数据
+	ProtocolFlowTopArr []NameAndPercent //协议流量数据
+}
+
+type NameAndPercent struct {
+	Name    string //名称
+	Percent int    //占比
 }
 
 type SessionStatistic struct {
@@ -81,6 +87,21 @@ func TestGoChart(t *testing.T) {
 	outputBuf2 := new(bytes.Buffer)
 	pie.Render(chart.PNG, outputBuf2)
 	reportData.ProtocolTypeStatistic.ImgData = base64.StdEncoding.EncodeToString(outputBuf2.Bytes())
+
+	//表格
+	var list = make([]NameAndPercent, 0)
+	list = append(list, NameAndPercent{
+		Name:    "Apple",
+		Percent: 50,
+	}, NameAndPercent{
+		Name:    "Banana",
+		Percent: 25,
+	}, NameAndPercent{
+		Name:    "Orange",
+		Percent: 25,
+	})
+	reportData.ProtocolTypeStatistic.ProtocolFlowTopArr = list
+
 	err = parse.Execute(outputBuf, &reportData)
 	err = os.WriteFile("report.doc", outputBuf.Bytes(), 0644)
 	if err != nil {

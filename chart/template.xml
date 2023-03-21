@@ -23,8 +23,6 @@
               pkg:contentType="application/vnd.openxmlformats-package.relationships+xml">
         <pkg:xmlData>
             <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-                <Relationship Id="rId10" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
-                              Target="media/image5.png"/>
                 <Relationship Id="rId9" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
                               Target="media/image4.png"/>
                 <Relationship Id="rId8" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
@@ -50,7 +48,9 @@
                 <Relationship Id="rId11"
                               Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering"
                               Target="numbering.xml"/>
-
+                <Relationship Id="rId10"
+                              Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+                              Target="media/image5.png"/>
                 <Relationship Id="rId1"
                               Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles"
                               Target="styles.xml"/>
@@ -637,7 +637,9 @@
                         <w:pPr>
                             <w:ind w:firstLine="560" w:firstLineChars="200"/>
                             <w:rPr>
-                                <w:sz w:val="30"/>
+                                <w:rFonts w:hint="eastAsia"/>
+                                <w:sz w:val="28"/>
+                                <w:szCs w:val="28"/>
                                 <w:lang w:eastAsia="zh-CN"/>
                             </w:rPr>
                         </w:pPr>
@@ -705,23 +707,210 @@
                             <w:t>。</w:t>
                         </w:r>
                     </w:p>
+                    <w:tbl>
+                        <w:tblPr>
+                            <w:tblStyle w:val="5"/>
+                            <w:tblW w:w="0" w:type="auto"/>
+                            <w:tblInd w:w="0" w:type="dxa"/>
+                            <w:tblBorders>
+                                <w:top w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                <w:left w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                <w:bottom w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                <w:right w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                <w:insideH w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                <w:insideV w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                            </w:tblBorders>
+                            <w:tblLayout w:type="autofit"/>
+                            <w:tblCellMar>
+                                <w:left w:w="108" w:type="dxa"/>
+                                <w:right w:w="108" w:type="dxa"/>
+                            </w:tblCellMar>
+                        </w:tblPr>
+                        <w:tblGrid>
+                            <w:gridCol w:w="4261"/>
+                            <w:gridCol w:w="4261"/>
+                        </w:tblGrid>
+                        <w:tr>
+                            <w:tblPrEx>
+                                <w:tblBorders>
+                                    <w:top w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                    <w:left w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                    <w:bottom w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                    <w:right w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                    <w:insideH w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                    <w:insideV w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                </w:tblBorders>
+                                <w:tblCellMar>
+                                    <w:left w:w="108" w:type="dxa"/>
+                                    <w:right w:w="108" w:type="dxa"/>
+                                </w:tblCellMar>
+                            </w:tblPrEx>
+                            <w:trPr>
+                                <w:trHeight w:val="569" w:hRule="atLeast"/>
+                            </w:trPr>
+                            <w:tc>
+                                <w:tcPr>
+                                    <w:tcW w:w="4261" w:type="dxa"/>
+                                </w:tcPr>
+                                <w:p>
+                                    <w:pPr>
+                                        <w:jc w:val="center"/>
+                                        <w:rPr>
+                                            <w:rFonts w:hint="eastAsia"/>
+                                            <w:sz w:val="28"/>
+                                            <w:szCs w:val="28"/>
+                                            <w:lang w:eastAsia="zh-CN"/>
+                                        </w:rPr>
+                                    </w:pPr>
+                                    <w:r>
+                                        <w:rPr>
+                                            <w:rFonts w:hint="eastAsia"/>
+                                            <w:sz w:val="28"/>
+                                            <w:szCs w:val="28"/>
+                                            <w:lang w:eastAsia="zh-CN"/>
+                                        </w:rPr>
+                                        <w:t>协议名称</w:t>
+                                    </w:r>
+                                </w:p>
+                            </w:tc>
+                            <w:tc>
+                                <w:tcPr>
+                                    <w:tcW w:w="4261" w:type="dxa"/>
+                                </w:tcPr>
+                                <w:p>
+                                    <w:pPr>
+                                        <w:jc w:val="center"/>
+                                        <w:rPr>
+                                            <w:rFonts w:hint="eastAsia"/>
+                                            <w:sz w:val="28"/>
+                                            <w:szCs w:val="28"/>
+                                            <w:lang w:eastAsia="zh-CN"/>
+                                        </w:rPr>
+                                    </w:pPr>
+                                    <w:r>
+                                        <w:rPr>
+                                            <w:rFonts w:hint="eastAsia"/>
+                                            <w:sz w:val="28"/>
+                                            <w:szCs w:val="28"/>
+                                            <w:lang w:eastAsia="zh-CN"/>
+                                        </w:rPr>
+                                        <w:t>占比</w:t>
+                                    </w:r>
+                                </w:p>
+                            </w:tc>
+                        </w:tr>
+                        {{range .ProtocolTypeStatistic.ProtocolFlowTopArr}}
+                        <w:tr>
+                            <w:tblPrEx>
+                                <w:tblBorders>
+                                    <w:top w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                    <w:left w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                    <w:bottom w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                    <w:right w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                    <w:insideH w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                    <w:insideV w:val="single" w:color="auto" w:sz="4" w:space="0"/>
+                                </w:tblBorders>
+                                <w:tblCellMar>
+                                    <w:left w:w="108" w:type="dxa"/>
+                                    <w:right w:w="108" w:type="dxa"/>
+                                </w:tblCellMar>
+                            </w:tblPrEx>
+                            <w:tc>
+                                <w:tcPr>
+                                    <w:tcW w:w="4261" w:type="dxa"/>
+                                    <w:vAlign w:val="center"/>
+                                </w:tcPr>
+                                <w:p>
+                                    <w:pPr>
+                                        <w:widowControl/>
+                                        <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+                                        <w:jc w:val="center"/>
+                                        <w:rPr>
+                                            <w:rFonts w:hint="eastAsia"/>
+                                            <w:sz w:val="28"/>
+                                            <w:szCs w:val="28"/>
+                                            <w:lang w:eastAsia="zh-CN"/>
+                                        </w:rPr>
+                                    </w:pPr>
+                                    <w:r>
+                                        <w:rPr>
+                                            <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体"
+                                                      w:eastAsia="宋体"/>
+                                            <w:sz w:val="24"/>
+                                            <w:szCs w:val="24"/>
+                                        </w:rPr>
+                                        <w:t>{{.Name}}</w:t>
+                                    </w:r>
+                                </w:p>
+                            </w:tc>
+                            <w:tc>
+                                <w:tcPr>
+                                    <w:tcW w:w="4261" w:type="dxa"/>
+                                    <w:vAlign w:val="center"/>
+                                </w:tcPr>
+                                <w:p>
+                                    <w:pPr>
+                                        <w:widowControl/>
+                                        <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+                                        <w:jc w:val="center"/>
+                                        <w:rPr>
+                                            <w:rFonts w:hint="eastAsia"/>
+                                            <w:sz w:val="28"/>
+                                            <w:szCs w:val="28"/>
+                                            <w:lang w:eastAsia="zh-CN"/>
+                                        </w:rPr>
+                                    </w:pPr>
+                                    <w:r>
+                                        <w:rPr>
+                                            <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体"
+                                                      w:eastAsia="宋体"/>
+                                            <w:sz w:val="24"/>
+                                            <w:szCs w:val="24"/>
+                                        </w:rPr>
+                                        <w:t>{{.Percent}}</w:t>
+                                    </w:r>
+                                    <w:r>
+                                        <w:rPr>
+                                            <w:rFonts w:hint="eastAsia"/>
+                                            <w:sz w:val="28"/>
+                                            <w:szCs w:val="28"/>
+                                            <w:lang w:eastAsia="zh-CN"/>
+                                        </w:rPr>
+                                        <w:t>%</w:t>
+                                    </w:r>
+                                </w:p>
+                            </w:tc>
+                        </w:tr>
+                        {{end}}
+                    </w:tbl>
                     <w:p>
                         <w:pPr>
                             <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
-                            <w:ind w:firstLine="440" w:firstLineChars="200"/>
+                        </w:pPr>
+                    </w:p>
+                    <w:p>
+                        <w:pPr>
+                            <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
                             <w:rPr>
+                                <w:rFonts w:hint="eastAsia" w:eastAsia="仿宋"/>
+                                <w:lang w:eastAsia="zh-CN"/>
+                            </w:rPr>
+                        </w:pPr>
+                    </w:p>
+                    <w:p>
+                        <w:pPr>
+                            <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+                            <w:rPr>
+                                <w:rFonts w:hint="eastAsia" w:eastAsia="仿宋"/>
                                 <w:lang w:eastAsia="zh-CN"/>
                             </w:rPr>
                         </w:pPr>
                         <w:r>
-                            <w:rPr>
-                                <w:lang w:eastAsia="zh-CN"/>
-                            </w:rPr>
                             <w:drawing>
                                 <wp:inline distT="0" distB="0" distL="114300" distR="114300">
-                                    <wp:extent cx="5270500" cy="2630805"/>
-                                    <wp:effectExtent l="0" t="0" r="6350" b="17145"/>
-                                    <wp:docPr id="2" name="图片 2" descr="img1"/>
+                                    <wp:extent cx="5271770" cy="2255520"/>
+                                    <wp:effectExtent l="0" t="0" r="5080" b="11430"/>
+                                    <wp:docPr id="4" name="图片 2"/>
                                     <wp:cNvGraphicFramePr>
                                         <a:graphicFrameLocks
                                                 xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
@@ -732,7 +921,7 @@
                                             <pic:pic
                                                     xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
                                                 <pic:nvPicPr>
-                                                    <pic:cNvPr id="2" name="图片 2" descr="img1"/>
+                                                    <pic:cNvPr id="4" name="图片 2"/>
                                                     <pic:cNvPicPr>
                                                         <a:picLocks noChangeAspect="1"/>
                                                     </pic:cNvPicPr>
@@ -746,11 +935,15 @@
                                                 <pic:spPr>
                                                     <a:xfrm>
                                                         <a:off x="0" y="0"/>
-                                                        <a:ext cx="5270500" cy="2630805"/>
+                                                        <a:ext cx="5271770" cy="2255520"/>
                                                     </a:xfrm>
                                                     <a:prstGeom prst="rect">
                                                         <a:avLst/>
                                                     </a:prstGeom>
+                                                    <a:noFill/>
+                                                    <a:ln>
+                                                        <a:noFill/>
+                                                    </a:ln>
                                                 </pic:spPr>
                                             </pic:pic>
                                         </a:graphicData>
@@ -762,7 +955,47 @@
                     <w:p>
                         <w:pPr>
                             <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
-                            <w:ind w:firstLine="440" w:firstLineChars="200"/>
+                        </w:pPr>
+                    </w:p>
+                    <w:p>
+                        <w:pPr>
+                            <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+                        </w:pPr>
+                    </w:p>
+                    <w:p>
+                        <w:pPr>
+                            <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+                        </w:pPr>
+                    </w:p>
+                    <w:p>
+                        <w:pPr>
+                            <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+                        </w:pPr>
+                    </w:p>
+                    <w:p>
+                        <w:pPr>
+                            <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+                        </w:pPr>
+                    </w:p>
+                    <w:p>
+                        <w:pPr>
+                            <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+                            <w:rPr>
+                                <w:lang w:eastAsia="zh-CN"/>
+                            </w:rPr>
+                        </w:pPr>
+                    </w:p>
+                    <w:p>
+                        <w:pPr>
+                            <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
+                            <w:rPr>
+                                <w:lang w:eastAsia="zh-CN"/>
+                            </w:rPr>
+                        </w:pPr>
+                    </w:p>
+                    <w:p>
+                        <w:pPr>
+                            <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
                             <w:rPr>
                                 <w:lang w:eastAsia="zh-CN"/>
                             </w:rPr>
@@ -841,9 +1074,9 @@
                         <w:r>
                             <w:drawing>
                                 <wp:inline distT="0" distB="0" distL="114300" distR="114300">
-                                    <wp:extent cx="4914900" cy="2752725"/>
-                                    <wp:effectExtent l="0" t="0" r="0" b="9525"/>
-                                    <wp:docPr id="5" name="图片 1"/>
+                                    <wp:extent cx="5271770" cy="2904490"/>
+                                    <wp:effectExtent l="0" t="0" r="5080" b="10160"/>
+                                    <wp:docPr id="5" name="图片 3"/>
                                     <wp:cNvGraphicFramePr>
                                         <a:graphicFrameLocks
                                                 xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
@@ -854,7 +1087,7 @@
                                             <pic:pic
                                                     xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
                                                 <pic:nvPicPr>
-                                                    <pic:cNvPr id="5" name="图片 1"/>
+                                                    <pic:cNvPr id="5" name="图片 3"/>
                                                     <pic:cNvPicPr>
                                                         <a:picLocks noChangeAspect="1"/>
                                                     </pic:cNvPicPr>
@@ -868,7 +1101,7 @@
                                                 <pic:spPr>
                                                     <a:xfrm>
                                                         <a:off x="0" y="0"/>
-                                                        <a:ext cx="4914900" cy="2752725"/>
+                                                        <a:ext cx="5271770" cy="2904490"/>
                                                     </a:xfrm>
                                                     <a:prstGeom prst="rect">
                                                         <a:avLst/>
@@ -998,9 +1231,9 @@
                         <w:r>
                             <w:drawing>
                                 <wp:inline distT="0" distB="0" distL="114300" distR="114300">
-                                    <wp:extent cx="5114925" cy="2581275"/>
-                                    <wp:effectExtent l="0" t="0" r="9525" b="9525"/>
-                                    <wp:docPr id="6" name="图片 2"/>
+                                    <wp:extent cx="5271135" cy="2895600"/>
+                                    <wp:effectExtent l="0" t="0" r="5715" b="0"/>
+                                    <wp:docPr id="6" name="图片 4"/>
                                     <wp:cNvGraphicFramePr>
                                         <a:graphicFrameLocks
                                                 xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
@@ -1011,7 +1244,7 @@
                                             <pic:pic
                                                     xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
                                                 <pic:nvPicPr>
-                                                    <pic:cNvPr id="6" name="图片 2"/>
+                                                    <pic:cNvPr id="6" name="图片 4"/>
                                                     <pic:cNvPicPr>
                                                         <a:picLocks noChangeAspect="1"/>
                                                     </pic:cNvPicPr>
@@ -1025,7 +1258,7 @@
                                                 <pic:spPr>
                                                     <a:xfrm>
                                                         <a:off x="0" y="0"/>
-                                                        <a:ext cx="5114925" cy="2581275"/>
+                                                        <a:ext cx="5271135" cy="2895600"/>
                                                     </a:xfrm>
                                                     <a:prstGeom prst="rect">
                                                         <a:avLst/>
@@ -1154,9 +1387,9 @@
                         <w:r>
                             <w:drawing>
                                 <wp:inline distT="0" distB="0" distL="114300" distR="114300">
-                                    <wp:extent cx="4943475" cy="2562225"/>
-                                    <wp:effectExtent l="0" t="0" r="9525" b="9525"/>
-                                    <wp:docPr id="7" name="图片 3"/>
+                                    <wp:extent cx="5271135" cy="3091180"/>
+                                    <wp:effectExtent l="0" t="0" r="5715" b="13970"/>
+                                    <wp:docPr id="7" name="图片 5"/>
                                     <wp:cNvGraphicFramePr>
                                         <a:graphicFrameLocks
                                                 xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
@@ -1167,7 +1400,7 @@
                                             <pic:pic
                                                     xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
                                                 <pic:nvPicPr>
-                                                    <pic:cNvPr id="7" name="图片 3"/>
+                                                    <pic:cNvPr id="7" name="图片 5"/>
                                                     <pic:cNvPicPr>
                                                         <a:picLocks noChangeAspect="1"/>
                                                     </pic:cNvPicPr>
@@ -1181,7 +1414,7 @@
                                                 <pic:spPr>
                                                     <a:xfrm>
                                                         <a:off x="0" y="0"/>
-                                                        <a:ext cx="4943475" cy="2562225"/>
+                                                        <a:ext cx="5271135" cy="3091180"/>
                                                     </a:xfrm>
                                                     <a:prstGeom prst="rect">
                                                         <a:avLst/>
@@ -1260,14 +1493,14 @@
                         xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
                 <Template>Normal.dotm</Template>
                 <Pages>7</Pages>
-                <Words>215</Words>
-                <Characters>686</Characters>
+                <Words>223</Words>
+                <Characters>714</Characters>
                 <Lines>4</Lines>
                 <Paragraphs>1</Paragraphs>
                 <TotalTime>1</TotalTime>
                 <ScaleCrop>false</ScaleCrop>
                 <LinksUpToDate>false</LinksUpToDate>
-                <CharactersWithSpaces>747</CharactersWithSpaces>
+                <CharactersWithSpaces>775</CharactersWithSpaces>
                 <Application>WPS Office_11.1.0.13703_F1E327BC-269C-435d-A152-05C5408002CA</Application>
                 <DocSecurity>0</DocSecurity>
             </Properties>
@@ -1282,7 +1515,7 @@
                 <dcterms:created xsi:type="dcterms:W3CDTF">2022-10-11T06:10:00Z</dcterms:created>
                 <dc:creator>94757</dc:creator>
                 <cp:lastModifiedBy>BigStar</cp:lastModifiedBy>
-                <dcterms:modified xsi:type="dcterms:W3CDTF">2023-03-21T01:36:01Z</dcterms:modified>
+                <dcterms:modified xsi:type="dcterms:W3CDTF">2023-03-21T07:07:46Z</dcterms:modified>
                 <cp:revision>13</cp:revision>
             </cp:coreProperties>
         </pkg:xmlData>
@@ -20250,7 +20483,7 @@
                         xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
                         xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
                         mc:Ignorable="w14">
-                <w:zoom w:percent="100"/>
+                <w:zoom w:percent="110"/>
                 <w:embedSystemFonts/>
                 <w:bordersDoNotSurroundHeader w:val="0"/>
                 <w:bordersDoNotSurroundFooter w:val="0"/>
@@ -20341,6 +20574,7 @@
                     <w:rsid w:val="07CF0DA5"/>
                     <w:rsid w:val="0852571E"/>
                     <w:rsid w:val="09317B12"/>
+                    <w:rsid w:val="09AB7A86"/>
                     <w:rsid w:val="0C453B6F"/>
                     <w:rsid w:val="0DAD09C2"/>
                     <w:rsid w:val="0EC20452"/>
@@ -20356,6 +20590,7 @@
                     <w:rsid w:val="17602EFE"/>
                     <w:rsid w:val="1AE87493"/>
                     <w:rsid w:val="1B334486"/>
+                    <w:rsid w:val="1BF6798D"/>
                     <w:rsid w:val="1C534829"/>
                     <w:rsid w:val="1C964CCC"/>
                     <w:rsid w:val="1D153091"/>
@@ -20403,6 +20638,7 @@
                     <w:rsid w:val="40EB11DB"/>
                     <w:rsid w:val="417C1E33"/>
                     <w:rsid w:val="41AE6491"/>
+                    <w:rsid w:val="42B37AD7"/>
                     <w:rsid w:val="42C43A92"/>
                     <w:rsid w:val="44FA379B"/>
                     <w:rsid w:val="4560106C"/>
@@ -20417,6 +20653,7 @@
                     <w:rsid w:val="47C87B80"/>
                     <w:rsid w:val="480A789F"/>
                     <w:rsid w:val="48F30C2D"/>
+                    <w:rsid w:val="49315418"/>
                     <w:rsid w:val="4A9401EE"/>
                     <w:rsid w:val="4DCD422C"/>
                     <w:rsid w:val="50C11611"/>
@@ -20453,6 +20690,7 @@
                     <w:rsid w:val="6CEB6BE5"/>
                     <w:rsid w:val="6DE87EFA"/>
                     <w:rsid w:val="6DEC7841"/>
+                    <w:rsid w:val="6E076E1B"/>
                     <w:rsid w:val="71B96608"/>
                     <w:rsid w:val="72E6342D"/>
                     <w:rsid w:val="744228E5"/>
