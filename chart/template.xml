@@ -695,7 +695,7 @@
                                 <w:szCs w:val="24"/>
                                 <w:lang w:eastAsia="zh-CN"/>
                             </w:rPr>
-                            <w:t>{{.ProtocolTypeStatistic.MaxProtocolPercent}}</w:t>
+                            <w:t>{{.ProtocolTypeStatistic.MaxProtocolPercent}}%</w:t>
                         </w:r>
                         <w:r>
                             <w:rPr>
