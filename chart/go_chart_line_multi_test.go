@@ -26,19 +26,20 @@ func TestMultiLineChart(t *testing.T) {
 		Series: []chart.Series{
 			chart.TimeSeries{
 				Name:    "conn",
-				Style:   chart.Style{ClassName: "true"},
+				Style:   chart.StyleTextDefaults(),
 				XValues: TimeArr(),
 				YValues: []float64{133, 109, 123, 141, 143, 136, 115, 117, 117, 131, 108},
 			},
 			chart.TimeSeries{
 				Name:    "new",
+				Style:   chart.StyleTextDefaults(),
 				YAxis:   chart.YAxisSecondary,
 				XValues: TimeArr(),
 				YValues: []float64{0, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1},
 			},
 		},
 	}
-	f, _ := os.Create("output.png")
+	f, _ := os.Create("multi_line.png")
 	defer f.Close()
 	graph.Render(chart.PNG, f)
 }
