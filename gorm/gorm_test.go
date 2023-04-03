@@ -1,35 +1,10 @@
-package main
+package gorm
 
 import (
-	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"time"
+	"testing"
 )
-
-func main() {
-	db, err := gorm.Open(mysql.New(mysql.Config{
-		DSN:                       "root:tiger@tcp(127.0.0.1:3306)/usb?charset=utf8&parseTime=True&loc=Local", // DSN data source name
-		DefaultStringSize:         256,                                                                        // string 类型字段的默认长度
-		DisableDatetimePrecision:  true,                                                                       // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
-		DontSupportRenameIndex:    true,                                                                       // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
-		DontSupportRenameColumn:   true,                                                                       // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
-		SkipInitializeWithVersion: false,                                                                      // 根据当前 MySQL 版本自动配置
-	}), &gorm.Config{})
-
-	//var menus []SysMenu
-	//err = db.Model(&SysMenu{}).Scopes(Scope1, Scope2).Debug().Find(&menus).Error
-	//
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-	//fmt.Println(menus)
-
-	err = db.Model(&SysUser{}).Debug().Where("user_id = 2").Update("lock_time", time.Now().Format("2006-01-02 15:04:05")).Error
-	if err != nil {
-		fmt.Println(err)
-	}
-}
 
 func Scope1(db *gorm.DB) *gorm.DB {
 	return db.Where("module = 1")
@@ -93,4 +68,34 @@ type SysUser struct {
 
 func (SysUser) TableName() string {
 	return "sys_user"
+}
+
+func TestGorm1(t *testing.T) {
+	db, err := gorm.Open(mysql.New(mysql.Config{
+		DSN:                       "root:tiger@tcp(127.0.0.1:3306)/usb?charset=utf8&parseTime=True&loc=Local", // DSN data source name
+		DefaultStringSize:         256,                                                                        // string 类型字段的默认长度
+		DisableDatetimePrecision:  true,                                                                       // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
+		DontSupportRenameIndex:    true,                                                                       // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
+		DontSupportRenameColumn:   true,                                                                       // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
+		SkipInitializeWithVersion: false,                                                                      // 根据当前 MySQL 版本自动配置
+	}), &gorm.Config{})
+
+	//var menus []SysMenu
+	//err = db.Model(&SysMenu{}).Scopes(Scope1, Scope2).Debug().Find(&menus).Error
+	//
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//fmt.Println(menus)
+
+	//err = db.Model(&SysUser{}).Debug().Where("user_id = 2").Update("lock_time", time.Now().Format("2006-01-02 15:04:05")).Error
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	var user []interface{}
+	err = db.Model(&SysUser{}).Find(&user).Error
+	if err != nil {
+		t.Error(err)
+	}
+	t.Log(user)
 }
