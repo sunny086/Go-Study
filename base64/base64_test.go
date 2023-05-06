@@ -1,14 +1,16 @@
-package main
+package base64
 
 import (
 	"encoding/base64"
 	"fmt"
+	"testing"
 )
 
-func main() {
+func TestEncodeDecode(t *testing.T) {
 	encode := Base64Encode("admin:123456")
+	t.Log(encode)
 	decode := Base64Decode(encode) //YWRtaW46MTIzNDU2
-	fmt.Println(decode)
+	t.Log(decode)
 }
 
 func Base64Encode(encodeStr string) string {
@@ -19,6 +21,6 @@ func Base64Encode(encodeStr string) string {
 
 func Base64Decode(decodeStr string) string {
 	s, _ := base64.StdEncoding.DecodeString(decodeStr)
-	fmt.Printf("base64解码结果为：%s", string(s))
+	fmt.Printf("base64解码结果为：%s\n", string(s))
 	return string(s)
 }

@@ -1,6 +1,7 @@
 package net
 
 import (
+	"fmt"
 	"net"
 	"net/netip"
 	"testing"
@@ -23,4 +24,9 @@ func TestParseCIDR2(t *testing.T) {
 	t.Log(prefix.Addr())   //10.25.10.1
 	t.Log(prefix.Bits())   //24
 	t.Log(prefix.String()) //10.25.10.1/24
+}
+
+func TestParseCIDRMask(t *testing.T) {
+	mask := net.CIDRMask(24, 32)
+	fmt.Println(mask)
 }
