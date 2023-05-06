@@ -1,4 +1,4 @@
-package main
+package rsa
 
 import (
 	"bytes"
@@ -7,12 +7,9 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"errors"
-	"fmt"
-	"io/ioutil"
-	"os"
 )
 
-//创建公钥与私钥
+// 创建公钥与私钥
 func GenRsaKey(bits int) (string, string, error) {
 	// 生成私钥文件
 	privateKey, err := rsa.GenerateKey(rand.Reader, bits)
@@ -75,23 +72,4 @@ func RsaDecrypt(ciphertext, privateKey []byte) ([]byte, error) {
 		return nil, err
 	}
 	return rsa.DecryptPKCS1v15(rand.Reader, priv, ciphertext)
-}
-
-func main() {
-
-	//key, s, err := GenRsaKey(128)
-	//fmt.Println(key, s, err)
-	open, err := os.Open("public_key.pem")
-	fmt.Println(err)
-	defer open.Close()
-	pub, err := ioutil.ReadAll(open)
-	fmt.Println(err)
-	fmt.Println(pub)
-	fmt.Println(string(pub))
-	fmt.Println("=============加密=============")
-	encrypt, err := RsaEncrypt([]byte("hello"), pub)
-	fmt.Println(err)
-	fmt.Println(encrypt)
-	fmt.Println(string(encrypt))
-
 }
