@@ -53,3 +53,17 @@ func TestSplitDpiLog(t *testing.T) {
 	fmt.Println(sourcePort)
 	fmt.Println(destinationPort)
 }
+
+func TestSplitTableName(t *testing.T) {
+	tableName := "log_audit_flow_11"
+	//拿到最后一个_的位置
+	lastIndex := strings.LastIndex(tableName, "_")
+	fmt.Println(lastIndex)
+	//拿到最后一个_后面的字符串
+	suffix := tableName[lastIndex+1:]
+	fmt.Println(suffix)
+	//拿到最后一个_前面的字符串
+	prefix := tableName[:lastIndex]
+	fmt.Println(prefix)
+
+}
