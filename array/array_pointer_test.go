@@ -11,6 +11,8 @@ func TestArrayPointer(t *testing.T) {
 	fmt.Println(arr)
 	modifyArr2(&arr)
 	fmt.Println(arr)
+	//[1 2 3 4 5]
+	//[1 20 3 4 5]
 }
 func modifyArr1(a [5]int) {
 	a[1] = 20
