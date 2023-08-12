@@ -1,8 +1,8 @@
 package zap_test_test
 
 import (
-	"GoTest/zap_test/config"
-	"GoTest/zap_test/core"
+	"Go-Study/zap_test/config"
+	"Go-Study/zap_test/core"
 	"errors"
 	"fmt"
 	"go.uber.org/zap"

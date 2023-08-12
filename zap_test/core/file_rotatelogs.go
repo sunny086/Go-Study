@@ -1,7 +1,7 @@
 package core
 
 import (
-	"GoTest/zap_test/config"
+	"Go-Study/zap_test/config"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"go.uber.org/zap/zapcore"
 	"os"

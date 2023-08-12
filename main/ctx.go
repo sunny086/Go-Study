@@ -1,7 +1,7 @@
 package main
 
 import (
-	"GoTest/common"
+	"Go-Study/common"
 	"context"
 	"fmt"
 	"os"

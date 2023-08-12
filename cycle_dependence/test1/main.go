@@ -1,8 +1,8 @@
 package main
 
 import (
-	"GoTest/cycle_dependence/test1/a"
-	"GoTest/cycle_dependence/test1/b"
+	"Go-Study/cycle_dependence/test1/a"
+	"Go-Study/cycle_dependence/test1/b"
 )
 
 func main() {

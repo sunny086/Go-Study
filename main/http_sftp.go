@@ -1,8 +1,8 @@
 package main
 
 import (
-	"GoTest/sftp/insert/req"
-	"GoTest/sftp/insert/res"
+	"Go-Study/sftp/insert/req"
+	"Go-Study/sftp/insert/res"
 	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"

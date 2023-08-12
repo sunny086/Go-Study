@@ -1,7 +1,7 @@
 package main
 
 import (
-	"GoTest/init1"
+	"Go-Study/init1"
 	"fmt"
 	"log"
 )

@@ -1,7 +1,7 @@
 package b
 
 import (
-	"GoTest/cycle_dependence/test1/a_iface"
+	"Go-Study/cycle_dependence/test1/a_iface"
 	"fmt"
 )
 

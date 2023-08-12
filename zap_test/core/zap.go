@@ -1,7 +1,7 @@
 package core
 
 import (
-	"GoTest/zap_test/config"
+	"Go-Study/zap_test/config"
 	"fmt"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
