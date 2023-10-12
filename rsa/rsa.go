@@ -10,7 +10,7 @@ import (
 )
 
 // 创建公钥与私钥
-func GenRsaKey(bits int) (string, string, error) {
+func GenRsaKeyV2(bits int) (string, string, error) {
 	// 生成私钥文件
 	privateKey, err := rsa.GenerateKey(rand.Reader, bits)
 	if err != nil {
