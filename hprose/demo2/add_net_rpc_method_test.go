@@ -1,0 +1,72 @@
+package demo2
+
+import (
+	"errors"
+	"github.com/hprose/hprose-golang/v3/rpc"
+	"github.com/hprose/hprose-golang/v3/rpc/plugins/log"
+	"github.com/stretchr/testify/assert"
+	"net"
+	"testing"
+	"time"
+)
+
+type Args struct {
+	A, B int
+}
+
+type Quotient struct {
+	Quo, Rem int
+}
+
+type Arith int
+
+func (t *Arith) Multiply(args *Args, reply *int) error {
+	*reply = args.A * args.B
+	return nil
+}
+
+func (t *Arith) Divide(args *Args, quo *Quotient) error {
+	if args.B == 0 {
+		return errors.New("divide by zero")
+	}
+	quo.Quo = args.A / args.B
+	quo.Rem = args.A % args.B
+	return nil
+}
+
+func TestAddNetRPCMethodsServer(t *testing.T) {
+	service := rpc.NewService()
+	service.Codec = rpc.NewServiceCodec(rpc.WithDebug(true))
+	service.AddNetRPCMethods(new(Arith), "Arith")
+	server, err := net.Listen("tcp", "127.0.0.1:8412")
+	assert.NoError(t, err)
+	err = service.Bind(server)
+	assert.NoError(t, err)
+
+	time.Sleep(time.Second * 86400)
+	server.Close()
+}
+
+func TestAddNetRPCMethodsClient(t *testing.T) {
+	client := rpc.NewClient("tcp://127.0.0.1/")
+	client.Use(log.Plugin)
+	var proxy struct {
+		Multiply func(args Args) (int, error)
+		Divide   func(args Args) (Quotient, error)
+	}
+	client.UseService(&proxy, "Arith")
+	{
+		result, err := proxy.Multiply(Args{3, 2})
+		assert.Equal(t, 6, result)
+		assert.NoError(t, err)
+	}
+	{
+		result, err := proxy.Divide(Args{3, 2})
+		assert.Equal(t, Quotient{1, 1}, result)
+		assert.NoError(t, err)
+	}
+	{
+		_, err := proxy.Divide(Args{3, 0})
+		assert.EqualError(t, err, "divide by zero")
+	}
+}
