@@ -36,7 +36,7 @@ func TestHproseServer(t *testing.T) {
 	assert.NoError(t, err)
 	err = service.Bind(server)
 	assert.NoError(t, err)
-	time.Sleep(60 * time.Second)
+	time.Sleep(6000 * time.Second)
 	server.Close()
 }
 
