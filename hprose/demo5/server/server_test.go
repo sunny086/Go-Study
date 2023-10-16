@@ -8,7 +8,6 @@ import (
 	"github.com/hprose/hprose-golang/v3/rpc/socket"
 	cmap "github.com/orcaman/concurrent-map"
 	"net"
-	"strconv"
 	"testing"
 	"time"
 )
@@ -35,20 +34,31 @@ type Param struct {
 	Message string `json:"message"`
 }
 
-type Task struct {
+type Args struct {
+	A, B int
 }
 
-func (t *Task) GetTask(param Param) (result string, err error) {
-	if param.Status == -1 {
-		return "", errors.New("STATUS ERROR")
+type Quotient struct {
+	Quo, Rem int
+}
+
+type Arith int
+
+func (t *Arith) Multiply(args *Args, reply *int) error {
+	*reply = args.A * args.B
+	return nil
+}
+
+func (t *Arith) Divide(args *Args, quo *Quotient) error {
+	if args.B == 0 {
+		return errors.New("divide by zero")
 	}
-	result = param.Message + strconv.Itoa(param.Id) + strconv.Itoa(param.Status)
-	return
+	quo.Quo = args.A / args.B
+	quo.Rem = args.A % args.B
+	return nil
 }
 
 var (
-	protocol           = "tcp"
-	port               = 8412
 	RemoteService      = rpc.NewService()
 	Caller             *reverse.Caller
 	ReverseCaller      *reverse.Caller
@@ -56,16 +66,14 @@ var (
 )
 
 func TestServer(t *testing.T) {
-	Caller = reverse.NewCaller(RemoteService)
-	RemoteService.Codec = rpc.NewServiceCodec(rpc.WithDebug(true))
-	RemoteService.AddAllMethods(new(Task), "task")
-	var server net.Listener
-	var err error
-	server, err = net.Listen(protocol, fmt.Sprintf("127.0.0.1:%d", port))
+	RemoteService.AddAllMethods(new(Arith), "Arith")
+	server, err := net.Listen("tcp", "127.0.0.1:8412")
 	if err != nil {
 		t.Log(err)
 	}
 	err = RemoteService.Bind(server)
+	Caller = reverse.NewCaller(RemoteService)
+	RemoteService.Codec = rpc.NewServiceCodec(rpc.WithDebug(true))
 
 	RemoteServiceCache = cmap.New()
 	handler := RemoteService.GetHandler("socket")
