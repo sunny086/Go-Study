@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/hprose/hprose-golang/v3/rpc"
-	"github.com/hprose/hprose-golang/v3/rpc/plugins/log"
 	"github.com/hprose/hprose-golang/v3/rpc/plugins/reverse"
 	"github.com/hprose/hprose-golang/v3/rpc/socket"
 	cmap "github.com/orcaman/concurrent-map"
@@ -15,10 +14,10 @@ import (
 )
 
 type SyncTaskProxy struct {
-	SyncTask func(task Task) (Task, error)
+	SyncTask func(param Param) (string, error)
 }
 type AsyncTaskProxy struct {
-	AsyncTask func(task Task) error
+	AsyncTask func(param Param) error
 }
 type StateProxy struct {
 	RunningState func() (string, error)
@@ -73,40 +72,31 @@ func TestServer(t *testing.T) {
 	socketHandler := handler.(*socket.Handler)
 	socketHandler.OnError = func(con net.Conn, err error) {
 		fmt.Println("server OnError")
+		if err != nil {
+			fmt.Println(err.Error())
+		}
 	}
 	socketHandler.OnAccept = func(conn net.Conn) net.Conn {
 		fmt.Printf("client accept :%s\n", conn.RemoteAddr().String())
+		var syncTaskProxy = SyncTaskProxy{}
+		var asyncTaskProxy = AsyncTaskProxy{}
+		var stateProxy = StateProxy{}
+		Caller.UseService(&syncTaskProxy, "uuid")
+		Caller.UseService(&asyncTaskProxy, "uuid")
+		Caller.UseService(&stateProxy, "uuid")
+		proxyCache := ProxyCache{}
+		proxyCache.SyncTaskProxy = &syncTaskProxy
+		proxyCache.AsyncTaskProxy = &asyncTaskProxy
+		proxyCache.StateTaskProxy = &stateProxy
+		msg, err := proxyCache.SyncTaskProxy.SyncTask(Param{Id: 1, Status: 1, Message: "dafads"})
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+		fmt.Println(msg)
 		return conn
 	}
 	socketHandler.OnClose = func(conn net.Conn) {
 		fmt.Println("server OnClose")
 	}
-
-	var syncTaskProxy = SyncTaskProxy{}
-	var asyncTaskProxy = AsyncTaskProxy{}
-	var stateProxy = StateProxy{}
-	Caller.UseService(&syncTaskProxy, "uuid")
-	Caller.UseService(&asyncTaskProxy, "uuid")
-	Caller.UseService(&stateProxy, "uuid")
-
-	time.Sleep(86400 * time.Second)
-}
-
-func TestClient(t *testing.T) {
-	client := rpc.NewClient("tcp://127.0.0.1/")
-	socketTransport := rpc.SocketTransport(client)
-	socketTransport.OnConnect = func(c net.Conn) net.Conn {
-		fmt.Println(c.LocalAddr().String() + "->" + c.RemoteAddr().String() + " connected")
-		return c
-	}
-	socketTransport.OnClose = func(c net.Conn) {
-		fmt.Println(c.LocalAddr().String() + "->" + c.RemoteAddr().String() + " closed on client")
-	}
-	client.Use(log.Plugin)
-	var proxy struct {
-		GetTask func(param Param) (result string, err error)
-	}
-	client.UseService(&proxy)
-	proxy.GetTask(Param{Id: 1, Status: 1, Message: "hello"})
 	time.Sleep(86400 * time.Second)
 }

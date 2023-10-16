@@ -2,8 +2,10 @@ package demo2
 
 import (
 	"errors"
+	"fmt"
 	"github.com/hprose/hprose-golang/v3/rpc"
 	"github.com/hprose/hprose-golang/v3/rpc/plugins/log"
+	"github.com/hprose/hprose-golang/v3/rpc/socket"
 	"github.com/stretchr/testify/assert"
 	"net"
 	"testing"
@@ -42,6 +44,22 @@ func TestAddNetRPCMethodsServer(t *testing.T) {
 	assert.NoError(t, err)
 	err = service.Bind(server)
 	assert.NoError(t, err)
+
+	handler := service.GetHandler("socket")
+	socketHandler := handler.(*socket.Handler)
+	socketHandler.OnError = func(con net.Conn, err error) {
+		fmt.Println("server OnError")
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+	}
+	socketHandler.OnAccept = func(conn net.Conn) net.Conn {
+		fmt.Printf("client accept :%s\n", conn.RemoteAddr().String())
+		return conn
+	}
+	socketHandler.OnClose = func(conn net.Conn) {
+		fmt.Println("server OnClose")
+	}
 
 	time.Sleep(time.Second * 86400)
 	server.Close()
