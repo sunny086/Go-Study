@@ -7,6 +7,7 @@ import (
 	"github.com/hprose/hprose-golang/v3/rpc/plugins/reverse"
 	"github.com/hprose/hprose-golang/v3/rpc/socket"
 	cmap "github.com/orcaman/concurrent-map"
+	"github.com/stretchr/testify/assert"
 	"net"
 	"testing"
 	"time"
@@ -66,23 +67,19 @@ var (
 )
 
 func TestServer(t *testing.T) {
+	RemoteService.Codec = rpc.NewServiceCodec(rpc.WithDebug(true))
 	RemoteService.AddAllMethods(new(Arith), "Arith")
 	server, err := net.Listen("tcp", "127.0.0.1:8412")
-	if err != nil {
-		t.Log(err)
-	}
+	assert.NoError(t, err)
 	err = RemoteService.Bind(server)
 	Caller = reverse.NewCaller(RemoteService)
-	RemoteService.Codec = rpc.NewServiceCodec(rpc.WithDebug(true))
 
 	RemoteServiceCache = cmap.New()
 	handler := RemoteService.GetHandler("socket")
 	socketHandler := handler.(*socket.Handler)
 	socketHandler.OnError = func(con net.Conn, err error) {
 		fmt.Println("server OnError")
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+		assert.NoError(t, err)
 	}
 	socketHandler.OnAccept = func(conn net.Conn) net.Conn {
 		fmt.Printf("client accept :%s\n", conn.RemoteAddr().String())
@@ -98,9 +95,7 @@ func TestServer(t *testing.T) {
 		proxyCache.AsyncTaskProxy = &asyncTaskProxy
 		proxyCache.StateTaskProxy = &stateProxy
 		msg, err := proxyCache.SyncTaskProxy.SyncTask(Param{Id: 1, Status: 1, Message: "dafads"})
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+		assert.NoError(t, err)
 		fmt.Println(msg)
 		return conn
 	}
