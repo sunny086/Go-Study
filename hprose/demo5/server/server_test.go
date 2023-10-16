@@ -122,13 +122,16 @@ func ProxyCacheInit() {
 }
 
 func ExecuteTest() {
-	time.Sleep(1 * time.Second)
-	fmt.Println("start execute test")
-	proxy, _ := RemoteServiceCache.Get("proxyCache")
-	proxyCache := proxy.(ProxyCache)
-	msg, err := proxyCache.SyncTaskProxy.SyncTask(Param{Status: 1, Message: "hello client ~~~"})
-	if err != nil {
-		fmt.Println(err.Error())
+	//for循环测试长连接是否只构建一次
+	for i := 0; i < 5; i++ {
+		time.Sleep(1 * time.Second)
+		fmt.Println("start execute test")
+		proxy, _ := RemoteServiceCache.Get("proxyCache")
+		proxyCache := proxy.(ProxyCache)
+		msg, err := proxyCache.SyncTaskProxy.SyncTask(Param{Status: 1, Message: "hello client ~~~"})
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+		fmt.Println("client返回值：" + msg)
 	}
-	fmt.Println("client返回值：" + msg)
 }
