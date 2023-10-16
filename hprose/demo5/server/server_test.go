@@ -78,12 +78,13 @@ func TestServer(t *testing.T) {
 	}
 	socketHandler.OnAccept = func(conn net.Conn) net.Conn {
 		fmt.Printf("client accept :%s\n", conn.RemoteAddr().String())
+		fmt.Println(conn.LocalAddr().String() + "->" + conn.RemoteAddr().String() + " closed on client")
 		var syncTaskProxy = SyncTaskProxy{}
 		var asyncTaskProxy = AsyncTaskProxy{}
 		var stateProxy = StateProxy{}
-		Caller.UseService(&syncTaskProxy, "uuid")
-		Caller.UseService(&asyncTaskProxy, "uuid")
-		Caller.UseService(&stateProxy, "uuid")
+		Caller.UseService(&syncTaskProxy, "syn")
+		Caller.UseService(&asyncTaskProxy, "syn")
+		Caller.UseService(&stateProxy, "syn")
 		proxyCache := ProxyCache{}
 		proxyCache.SyncTaskProxy = &syncTaskProxy
 		proxyCache.AsyncTaskProxy = &asyncTaskProxy

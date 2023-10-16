@@ -32,12 +32,12 @@ func TestClient(t *testing.T) {
 	client := rpc.NewClient("tcp://127.0.0.1/")
 	// 创建Socket传输
 	socketTransport := rpc.SocketTransport(client)
-	socketTransport.OnConnect = func(c net.Conn) net.Conn {
-		fmt.Println(c.LocalAddr().String() + "->" + c.RemoteAddr().String() + " connected")
-		return c
+	socketTransport.OnConnect = func(conn net.Conn) net.Conn {
+		fmt.Println(conn.LocalAddr().String() + "->" + conn.RemoteAddr().String() + " connected")
+		return conn
 	}
-	socketTransport.OnClose = func(c net.Conn) {
-		fmt.Println(c.LocalAddr().String() + "->" + c.RemoteAddr().String() + " closed on client")
+	socketTransport.OnClose = func(conn net.Conn) {
+		fmt.Println(conn.LocalAddr().String() + "->" + conn.RemoteAddr().String() + " closed on client")
 	}
 	client.Use(log.Plugin)
 
@@ -47,7 +47,7 @@ func TestClient(t *testing.T) {
 		GetTask func(param Param) (result string, err error)
 	}
 	client.UseService(&proxy, "task")
-	result, err := proxy.GetTask(Param{Id: 1, Status: 1, Message: "hello"})
+	result, err := proxy.GetTask(Param{Id: 1, Status: -1, Message: "hello"})
 	if err != nil {
 		fmt.Println(err.Error())
 	}
