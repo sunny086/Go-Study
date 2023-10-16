@@ -31,7 +31,6 @@ type ProxyCache struct {
 }
 
 type Param struct {
-	Id      int    `json:"id"`
 	Status  int    `json:"status"`
 	Message string `json:"message"`
 }
@@ -46,33 +45,30 @@ type Quotient struct {
 
 type Arith int
 
-func (t *Arith) Multiply(args *Args, reply *int) error {
-	*reply = args.A * args.B
-	return nil
-}
-
-func (t *Arith) Divide(args *Args, quo *Quotient) error {
-	if args.B == 0 {
-		return errors.New("divide by zero")
-	}
-	quo.Quo = args.A / args.B
-	quo.Rem = args.A % args.B
-	return nil
-}
-
-//func (t *Arith) Multiply(args *Args, reply *int) (int, error) {
+//func (t *Arith) Multiply(args *Args, reply *int) error {
 //	*reply = args.A * args.B
-//	return *reply, nil
+//	return nil
 //}
 //
-//func (t *Arith) Divide(args *Args, quo *Quotient) (Quotient, error) {
+//func (t *Arith) Divide(args *Args, quo *Quotient) error {
 //	if args.B == 0 {
-//		return Quotient{}, errors.New("divide by zero")
+//		return errors.New("divide by zero")
 //	}
 //	quo.Quo = args.A / args.B
 //	quo.Rem = args.A % args.B
-//	return *quo, nil
+//	return nil
 //}
+
+func (t *Arith) Multiply(args *Args) (int, error) {
+	return args.A * args.B, nil
+}
+
+func (t *Arith) Divide(args *Args) (Quotient, error) {
+	if args.B == 0 {
+		return Quotient{}, errors.New("divide by zero")
+	}
+	return Quotient{Quo: args.A / args.B, Rem: args.A % args.B}, nil
+}
 
 var (
 	Caller             *reverse.Caller
@@ -114,25 +110,25 @@ func ProxyCacheInit() {
 	var syncTaskProxy = SyncTaskProxy{}
 	var asyncTaskProxy = AsyncTaskProxy{}
 	var stateProxy = StateProxy{}
-	Caller.UseService(&syncTaskProxy, "syn")
-	Caller.UseService(&asyncTaskProxy, "syn")
-	Caller.UseService(&stateProxy, "syn")
+	Caller.UseService(&syncTaskProxy, "1")
+	Caller.UseService(&asyncTaskProxy, "1")
+	Caller.UseService(&stateProxy, "1")
 	proxyCache := ProxyCache{}
 	proxyCache.SyncTaskProxy = &syncTaskProxy
 	proxyCache.AsyncTaskProxy = &asyncTaskProxy
 	proxyCache.StateTaskProxy = &stateProxy
 	RemoteServiceCache.Set("proxyCache", proxyCache)
-	go ExecuteTest()
+	ExecuteTest()
 }
 
 func ExecuteTest() {
-	time.Sleep(60 * time.Second)
+	time.Sleep(1 * time.Second)
 	fmt.Println("start execute test")
 	proxy, _ := RemoteServiceCache.Get("proxyCache")
 	proxyCache := proxy.(ProxyCache)
-	msg, err := proxyCache.SyncTaskProxy.SyncTask(Param{Id: 1, Status: 1, Message: "dafads"})
+	msg, err := proxyCache.SyncTaskProxy.SyncTask(Param{Status: 1, Message: "hello client ~~~"})
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println(msg)
+	fmt.Println("client返回值：" + msg)
 }
