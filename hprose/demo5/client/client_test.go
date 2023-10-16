@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"net"
 	"strconv"
+	"sync"
 	"testing"
 )
 
@@ -36,7 +37,11 @@ type Quotient struct {
 	Quo, Rem int
 }
 
+var wg sync.WaitGroup
+
 func TestClient(t *testing.T) {
+	wg.Add(1)
+	// 创建RPC客户端
 	client := rpc.NewClient("tcp://127.0.0.1/")
 	// 创建Socket传输
 	socketTransport := rpc.SocketTransport(client)
@@ -67,5 +72,5 @@ func TestClient(t *testing.T) {
 		_, err := proxy.Divide(Args{3, 0})
 		assert.EqualError(t, err, "divide by zero")
 	}
-	//time.Sleep(86400 * time.Second)
+	wg.Wait()
 }

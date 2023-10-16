@@ -8,8 +8,8 @@ import (
 	"github.com/hprose/hprose-golang/v3/rpc/socket"
 	"github.com/stretchr/testify/assert"
 	"net"
+	"sync"
 	"testing"
-	"time"
 )
 
 type Args struct {
@@ -36,7 +36,10 @@ func (t *Arith) Divide(args *Args, quo *Quotient) error {
 	return nil
 }
 
+var wg sync.WaitGroup
+
 func TestAddNetRPCMethodsServer(t *testing.T) {
+	wg.Add(1)
 	service := rpc.NewService()
 	service.Codec = rpc.NewServiceCodec(rpc.WithDebug(true))
 	service.AddNetRPCMethods(new(Arith), "Arith")
@@ -61,7 +64,7 @@ func TestAddNetRPCMethodsServer(t *testing.T) {
 		fmt.Println("server OnClose")
 	}
 
-	time.Sleep(time.Second * 86400)
+	wg.Wait()
 	server.Close()
 }
 
