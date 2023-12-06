@@ -2,6 +2,7 @@ package kafka
 
 import (
 	"fmt"
+	"strconv"
 	"testing"
 	"time"
 
@@ -26,15 +27,17 @@ func TestProducer(t *testing.T) {
 
 	message := &sarama.ProducerMessage{
 		Topic: topic,
-		Value: sarama.StringEncoder("Hello, Kafka!"),
 	}
 	//定时器
 	ticker := time.NewTicker(2 * time.Second)
 
 	// 启动一个无限循环，等待定时器事件
+	i := 0
 	for {
 		select {
 		case <-ticker.C:
+			i++
+			message.Value = sarama.StringEncoder(strconv.Itoa(i) + "-Hello, Kafka!")
 			_, _, err = producer.SendMessage(message)
 			if err != nil {
 				t.Fatalf("Failed to send message: %s", err)
