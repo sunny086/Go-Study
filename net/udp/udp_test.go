@@ -33,6 +33,36 @@ func TestUdpAptSip(t *testing.T) {
 	}
 }
 
+func TestAudit1(t *testing.T) {
+	serverAddr := "10.25.16.130:1514"
+	message := "Oct 24 14:34:36 netvine/10.25.10.120 {\"logType\":15,\"time\":\"2023-12-13 10:05:41\",\"message\":{\"data_type\":\"EVENT_NETWORK_ASSENT\",\"payload\":{\"dev_ipv4\":\"192.168.122.1\",\"dev_mac\":\"52:54:00:a9:a6:7e\",\"dns_info\":[{\"class_index\":1,\"data\":\"LOCALHOST._device-info._tcp.local\",\"domain\":\"_device-info._tcp.local\",\"ttl\":10,\"type\":\"PTR\",\"type_index\":12},{\"class_index\":1,\"data\":\"model=MacSamba\",\"domain\":\"LOCALHOST._device-info._tcp.local\",\"ttl\":10,\"type\":\"TXT\",\"type_index\":16},{\"class_index\":1,\"domain\":\"LOCALHOST._device-info._tcp.local\",\"ttl\":10,\"type\":\"SRV\",\"type_index\":33}],\"protocol_type\":\"mdns\"}}}"
+	for i := 0; i < 100; i++ {
+		SendMessage(message, serverAddr)
+	}
+}
+func TestAudit2(t *testing.T) {
+	serverAddr := "10.25.16.130:514"
+	message := "Oct 24 14:34:36 netvine/10.25.10.120 {\"logType\":15,\"time\":\"2023-12-13 10:05:41\",\"message\":{\"data_type\":\"EVENT_NETWORK_ASSENT\",\"payload\":{\"dev_ipv4\":\"192.168.122.1\",\"dev_mac\":\"52:54:00:a9:a6:7e\",\"dns_info\":[{\"class_index\":1,\"data\":\"LOCALHOST._device-info._tcp.local\",\"domain\":\"_device-info._tcp.local\",\"ttl\":10,\"type\":\"PTR\",\"type_index\":12},{\"class_index\":1,\"data\":\"model=MacSamba\",\"domain\":\"LOCALHOST._device-info._tcp.local\",\"ttl\":10,\"type\":\"TXT\",\"type_index\":16},{\"class_index\":1,\"domain\":\"LOCALHOST._device-info._tcp.local\",\"ttl\":10,\"type\":\"SRV\",\"type_index\":33}],\"protocol_type\":\"mdns\"}}}"
+	for i := 0; i < 100; i++ {
+		SendMessage(message, serverAddr)
+	}
+}
+
+func TestAudit3(t *testing.T) {
+	serverAddr := "10.25.16.130:1514"
+	message := "{\"logType\":15,\"time\":\"2023-12-13 10:05:41\",\"message\":{\"data_type\":\"EVENT_NETWORK_ASSENT\",\"payload\":{\"dev_ipv4\":\"192.168.122.1\",\"dev_mac\":\"52:54:00:a9:a6:7e\",\"dns_info\":[{\"class_index\":1,\"data\":\"LOCALHOST._device-info._tcp.local\",\"domain\":\"_device-info._tcp.local\",\"ttl\":10,\"type\":\"PTR\",\"type_index\":12},{\"class_index\":1,\"data\":\"model=MacSamba\",\"domain\":\"LOCALHOST._device-info._tcp.local\",\"ttl\":10,\"type\":\"TXT\",\"type_index\":16},{\"class_index\":1,\"domain\":\"LOCALHOST._device-info._tcp.local\",\"ttl\":10,\"type\":\"SRV\",\"type_index\":33}],\"protocol_type\":\"mdns\"}}}"
+	for i := 0; i < 100; i++ {
+		SendMessage(message, serverAddr)
+	}
+}
+func TestAudit4(t *testing.T) {
+	serverAddr := "10.25.16.130:514"
+	message := "{\"logType\":15,\"time\":\"2023-12-13 10:05:41\",\"message\":{\"data_type\":\"EVENT_NETWORK_ASSENT\",\"payload\":{\"dev_ipv4\":\"192.168.122.1\",\"dev_mac\":\"52:54:00:a9:a6:7e\",\"dns_info\":[{\"class_index\":1,\"data\":\"LOCALHOST._device-info._tcp.local\",\"domain\":\"_device-info._tcp.local\",\"ttl\":10,\"type\":\"PTR\",\"type_index\":12},{\"class_index\":1,\"data\":\"model=MacSamba\",\"domain\":\"LOCALHOST._device-info._tcp.local\",\"ttl\":10,\"type\":\"TXT\",\"type_index\":16},{\"class_index\":1,\"domain\":\"LOCALHOST._device-info._tcp.local\",\"ttl\":10,\"type\":\"SRV\",\"type_index\":33}],\"protocol_type\":\"mdns\"}}}"
+	for i := 0; i < 100; i++ {
+		SendMessage(message, serverAddr)
+	}
+}
+
 func SendMessage(message, serverAddr string) {
 	time.Sleep(1 * time.Second)
 	//// UDP 服务器地址
