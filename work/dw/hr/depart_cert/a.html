@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="zh-CN">
+        <head>
+        <meta charset="UTF-8">
+        <title>离职证明</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 21cm;
+            height: 29.7cm;
+            padding: 2cm;
+            box-sizing: border-box;
+            margin: auto;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+
+        .header {
+            text-align: right;
+        }
+
+        .header img {
+            width: 100px;
+            height: auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .content {
+            margin-top: 20px;
+            text-indent: 2em;
+        }
+
+        .signature {
+            margin-top: 50px;
+            text-align: right;
+        }
+
+        .receipt {
+            margin-top: 50px;
+            border-top: 1px dashed #ccc;
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        .receipt .content {
+            text-align: left;
+            text-indent: 2em;
+        }
+
+        .signature .date {
+            margin-top: 10px;
+        }
+
+        .placeholder {
+            position: relative;
+            display: inline-block;
+            vertical-align: center;
+        }
+
+        .placeholder::after {
+            content: "";
+            border-bottom: 1px solid #000;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            z-index: -1;
+        }
+
+        .placeholder span {
+            white-space: nowrap;
+            position: relative;
+            padding: 0 5px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <img src="logo.png" alt="Logo">
+    </div>
+    <h1>离职证明</h1>
+    <div class="content">
+        <p>兹证明 <span id="employeeName" class="placeholder"><span>_______</span></span> ，身份证号码：<span
+                id="idNumber"
+                class="placeholder"><span>_______</span></span>，于
+            <span id="startDate" class="placeholder"><span>_______</span></span> 至 <span id="endDate"
+                                                                                          class="placeholder"><span>_______</span></span>
+            ，担任
+            <span id="position" class="placeholder"><span>_______</span></span> （公司） <span id="company"
+                                                                                             class="placeholder"><span>_______</span></span>
+            （职位）。于 <span id="terminationDate" class="placeholder"><span>_______</span></span> 与我公司正式解除劳动关系。
+        </p>
+        <p>双方已就劳动关系存续期间的所有问题达成一致，并已一次性结清。同时，我公司已为其办妥离职手续。</p>
+        <p>离职生效日起：员工仍应按与公司签署的保密、知识产权条款约定，履行相关义务。员工需/无需履行竞业限制义务。</p>
+        <p>特此证明。</p>
+        <div class="signature">
+            <p>公司：<span id="companySignature" class="placeholder"><span>_______</span></span></p>
+            <p class="date">日期：<span id="signatureDate" class="placeholder"><span>_______</span></span></p>
+        </div>
+    </div>
+    <div class="receipt">
+        <h2>回 执</h2>
+        <div class="content">
+            <p>兹证明 <span id="employeeNameReceipt" class="placeholder"><span>_______</span></span> ，身份证号码：<span
+                    id="idNumberReceipt" class="placeholder"><span>_______</span></span>，于 <span id="startDateReceipt"
+                                                                                                  class="placeholder"><span>_______</span></span>
+                至 <span id="endDateReceipt" class="placeholder"><span>_______</span></span> ，担任 <span
+                        id="positionReceipt"
+                        class="placeholder"><span>_______</span></span>
+                （公司） <span id="companyReceipt" class="placeholder"><span>_______</span></span> （职位）。于 <span
+                        id="terminationDateReceipt" class="placeholder"><span>_______</span></span> 与我公司正式解除劳动关系。
+            </p>
+            <p>本人已收到 <span id="companyReceipt2" class="placeholder"><span>_______</span></span> 公司 于 <span
+                    id="signatureDateReceipt" class="placeholder"><span>_______</span></span> 出具的《离职证明》。</p>
+            <div class="signature">
+                <p>签收人：<span id="recipientSignature" class="placeholder"><span>_______</span></span></p>
+                <p class="date">日期：<span id="recipientSignatureDate" class="placeholder"><span>_______</span></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Example data object to replace placeholders
+    const data = {
+        employeeName: "张三",
+        idNumber: "123456789012345678",
+        startDate: "2020年1月1日",
+        endDate: "2022年12月31日",
+        company: "某公司",
+        position: "软件工程师",
+        terminationDate: "2023年1月1日",
+        companySignature: "某公司",
+        signatureDate: "2023年1月1日",
+        employeeNameReceipt: "张三",
+        idNumberReceipt: "123456789012345678",
+        startDateReceipt: "2020年1月1日",
+        endDateReceipt: "2022年12月31日",
+        companyReceipt: "某公司",
+        positionReceipt: "软件工程师",
+        terminationDateReceipt: "2023年1月1日",
+        companyReceipt2: "某公司",
+        signatureDateReceipt: "2023年1月1日",
+        recipientSignature: "李四",
+        recipientSignatureDate: "2023年1月1日"
+    };
+
+    // Function to replace placeholders
+    function replacePlaceholders(data) {
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                const element = document.getElementById(key);
+                element.querySelector('span').textContent = data[key];
+            }
+        }
+    }
+
+    // Replace placeholders on page load
+    document.addEventListener("DOMContentLoaded", function () {
+        replacePlaceholders(data);
+    });
+</script>
+</body>
+</html>
