@@ -1,4 +1,4 @@
-package algorithm
+package _2_algorithm
 
 import (
 	"fmt"

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"Go-Study/common"
+	"Go-Study/01_grammar/common"
 	"context"
 	"fmt"
 	"os"

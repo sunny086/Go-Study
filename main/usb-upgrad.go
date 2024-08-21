@@ -13,7 +13,7 @@ func main() {
 	}
 }
 
-//Command 这里为了简化，我省去了stderr和其他信息
+// Command 这里为了简化，我省去了stderr和其他信息
 func Command(cmd string) error {
 	c := exec.Command("bash", "-c", cmd)
 	// 此处是windows版本
