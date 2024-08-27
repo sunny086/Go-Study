@@ -1,9 +1,14 @@
 package money
 
 import (
+	"bufio"
 	"fmt"
+	"log"
 	"os"
+	"regexp"
+	"strconv"
 	"strings"
+	"testing"
 )
 
 // Transport 表示运输信息的结构体
@@ -13,51 +18,76 @@ type Transport struct {
 	CarType   string // 车种
 	License   string // 车牌号
 	FromTo    string // 起止地
-	Price     string // 运费金额（元）
+	Price     int    // 运费金额（元）
 	Remark    string // 备注
 }
 
-// 字符串数组
-var strArr = []string{
-	"夏鑫",
-	"王静",
-	"金铭",
-	"丽娜",
-	"李延琼",
-	"小鱼",
-	"小鱼",
-	"韩粟",
-	"康道林",
-}
-
-func main() {
-	// 读取文件内容
-	content, err := os.ReadFile("mom.txt")
+func TestMom(t *testing.T) {
+	file, err := os.Open("mom.txt")
 	if err != nil {
-		fmt.Println("读取文件时发生错误:", err)
-		return
+		log.Fatalf("打开文件时发生错误: %v", err)
 	}
-	//替换文本中的一为-
-	contentStr := []byte(strings.ReplaceAll(string(content), "一", "-"))
-	//fmt.Println(string(contentStr))
+	defer file.Close()
 
-	// 将文本按人名划分
-	for _, name := range strArr {
-		fmt.Println("------", name, "------")
-		splitAndPrint(string(contentStr), name)
+	scanner := bufio.NewScanner(file)
+	var transport []Transport
+	i := 0
+	var currentTransport Transport
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		if strings.TrimSpace(line) != "" {
+			// 循环读取每一行 每读五次 就创建一个新的Transport对象
+			switch i {
+			case 0:
+				// 日期
+				currentTransport.Date = line
+			case 1:
+				// 申请用车人
+				currentTransport.Applicant = line
+			case 2:
+				// 车种和车牌号
+				carInfo := strings.Split(line, "，")
+				if len(carInfo) > 1 {
+					currentTransport.CarType = strings.TrimSpace(carInfo[0])
+					// 提取车牌号
+					licenseMatch := regexp.MustCompile(`车号(.+)`).FindStringSubmatch(carInfo[1])
+					if len(licenseMatch) > 1 {
+						currentTransport.License = strings.TrimSpace(licenseMatch[1])
+					}
+				}
+			case 3:
+				// 起止地
+				currentTransport.FromTo = line
+			case 4:
+				// 运费金额（元）
+				priceMatch := regexp.MustCompile(`运费(\d+)元`).FindStringSubmatch(line)
+				if len(priceMatch) > 1 {
+					price, err := strconv.Atoi(priceMatch[1])
+					if err == nil {
+						currentTransport.Price = price
+					}
+				}
+			}
+
+			i++
+			// 每读取五行，就将Transport对象添加到切片中
+			if i == 5 {
+				transport = append(transport, currentTransport)
+				// 重置currentTransport
+				currentTransport = Transport{}
+				i = 0
+			}
+		}
 	}
-}
 
-// splitAndPrint 根据人名划分并打印运输信息
-func splitAndPrint(content, name string) {
-	// 根据人名划分文本
-	parts := strings.Split(content, name)
+	// 检查是否有读取错误
+	if err := scanner.Err(); err != nil {
+		log.Fatalf("读取文件时发生错误: %v", err)
+	}
 
-	// 遍历每个划分部分
-	for _, part := range parts[1:] { // 跳过第一个空字符串
-		part = strings.TrimSpace(part) // 去除前后空白字符
-		// 打印运输信息
-		fmt.Println(part)
-		fmt.Println()
+	// 输出读取的运输信息
+	for _, t := range transport {
+		fmt.Printf("Transport: %+v\n", t)
 	}
 }
