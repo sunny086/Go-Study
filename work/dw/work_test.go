@@ -23,6 +23,20 @@ func TestTime2(t *testing.T) {
 
 }
 
+func TestTime3(t *testing.T) {
+	expectedTime, _ := time.Parse("2006-01-02 15:04:05", "2024-01-01 00:00:00")
+
+	t.Log(expectedTime.Year())
+
+	date := expectedTime.AddDate(0, 0, -1)
+
+	t.Log(date.Year())
+
+	t.Log(date.Year())
+	t.Log(date.Month())
+
+}
+
 func TestSlice(t *testing.T) {
 	slice := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 	s1 := slice[2:5]
